@@ -93,8 +93,8 @@ namespace FileSystemImage.FileTree
 
             if (includeFolderNames && depth >= _folderSequenceArray.Length)
             {
-                System.Data.Linq.
-                if (_folderSequenceArray.)   
+                //System.Data.Linq.
+                //if (_folderSequenceArray.)   
             }
 
             if (rootDirectory.FileList != null)
