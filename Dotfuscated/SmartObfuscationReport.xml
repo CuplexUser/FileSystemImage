@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE dotfuscatorSmartObfuscation SYSTEM "http://www.preemptive.com/dotfuscator/dtd/dotfuscatorSmartObfuscation_v1.0.dtd">
+<dotfuscatorSmartObfuscation version="1.0">
+    <header>
+        <timestamp>2015-06-13T20:17:47</timestamp>
+        <product version="4.17.0.2685-release+7b49ddb.20150210.25525" user="Martin Dahl" serial="179599-EVA-08074580-1861A89F-DF09CF38-9322E5F3">Dotfuscator Professional Edition EVALUATION</product>
+    </header>
+    <smartdetails>
+        <detail warning="false">
+            <rule>CustomSerializationRule</rule>
+            <markeditem>
+                <itemtype>Method</itemtype>
+                <name>System.Exception::void(System.Runtime.Serialization.SerializationInfo, System.Runtime.Serialization.StreamingContext)</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>This method is a constructor called by the runtime during custom serialization</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>CustomSerializationRule</rule>
+            <markeditem>
+                <itemtype>Method</itemtype>
+                <name>System.Collections.Specialized.NameValueCollection::void(System.Runtime.Serialization.SerializationInfo, System.Runtime.Serialization.StreamingContext)</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>This method is a constructor called by the runtime during custom serialization</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>CustomSerializationRule</rule>
+            <markeditem>
+                <itemtype>Method</itemtype>
+                <name>System.Collections.Specialized.NameObjectCollectionBase::void(System.Runtime.Serialization.SerializationInfo, System.Runtime.Serialization.StreamingContext)</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>This method is a constructor called by the runtime during custom serialization</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>CustomSerializationRule</rule>
+            <markeditem>
+                <itemtype>Method</itemtype>
+                <name>System.ApplicationException::void(System.Runtime.Serialization.SerializationInfo, System.Runtime.Serialization.StreamingContext)</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>This method is a constructor called by the runtime during custom serialization</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>EnumRule</rule>
+            <markeditem>
+                <itemtype>Field</itemtype>
+                <name>PreEmptive.Analytics.Common.ExceptionType::value__</name>
+            </markeditem>
+            <operation>was excluded</operation>
+            <component>from renaming</component>
+            <reasons>
+                <reason>ToString() is invoked on this enum type in method PreEmptive.Analytics.Common.Messages.Fault::void .ctor(PreEmptive.Analytics.Common.IPlatform, PreEmptive.Analytics.Common.ExceptionInfo, System.Guid, PreEmptive.Analytics.Common.ExtendedKeys, PreEmptive.Analytics.Common.Tags.BinaryInfoTag)</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>EnumRule</rule>
+            <markeditem>
+                <itemtype>User Type</itemtype>
+                <name>PreEmptive.Analytics.Common.ExceptionType</name>
+            </markeditem>
+            <operation>was excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>ToString() is invoked on this enum type in method PreEmptive.Analytics.Common.Messages.Fault::void .ctor(PreEmptive.Analytics.Common.IPlatform, PreEmptive.Analytics.Common.ExceptionInfo, System.Guid, PreEmptive.Analytics.Common.ExtendedKeys, PreEmptive.Analytics.Common.Tags.BinaryInfoTag)</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>EnumRule</rule>
+            <markeditem>
+                <itemtype>User Type</itemtype>
+                <name>PreEmptive.Analytics.Common.ExceptionType</name>
+            </markeditem>
+            <operation>was excluded</operation>
+            <component>from renaming</component>
+            <reasons>
+                <reason>ToString() is invoked on this enum type in method PreEmptive.Analytics.Common.Messages.Fault::void .ctor(PreEmptive.Analytics.Common.IPlatform, PreEmptive.Analytics.Common.ExceptionInfo, System.Guid, PreEmptive.Analytics.Common.ExtendedKeys, PreEmptive.Analytics.Common.Tags.BinaryInfoTag)</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>EnumRule</rule>
+            <markeditem>
+                <itemtype>Field</itemtype>
+                <name>PreEmptive.Analytics.Common.ExceptionType::value__</name>
+            </markeditem>
+            <operation>was excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>ToString() is invoked on this enum type in method PreEmptive.Analytics.Common.Messages.Fault::void .ctor(PreEmptive.Analytics.Common.IPlatform, PreEmptive.Analytics.Common.ExceptionInfo, System.Guid, PreEmptive.Analytics.Common.ExtendedKeys, PreEmptive.Analytics.Common.Tags.BinaryInfoTag)</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>EnumRule</rule>
+            <markeditem>
+                <itemtype>Field</itemtype>
+                <name>PreEmptive.Analytics.Common.ExceptionType::Caught</name>
+            </markeditem>
+            <operation>was excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>ToString() is invoked on this enum type in method PreEmptive.Analytics.Common.Messages.Fault::void .ctor(PreEmptive.Analytics.Common.IPlatform, PreEmptive.Analytics.Common.ExceptionInfo, System.Guid, PreEmptive.Analytics.Common.ExtendedKeys, PreEmptive.Analytics.Common.Tags.BinaryInfoTag)</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>EnumRule</rule>
+            <markeditem>
+                <itemtype>Field</itemtype>
+                <name>PreEmptive.Analytics.Common.ExceptionType::Uncaught</name>
+            </markeditem>
+            <operation>was excluded</operation>
+            <component>from renaming</component>
+            <reasons>
+                <reason>ToString() is invoked on this enum type in method PreEmptive.Analytics.Common.Messages.Fault::void .ctor(PreEmptive.Analytics.Common.IPlatform, PreEmptive.Analytics.Common.ExceptionInfo, System.Guid, PreEmptive.Analytics.Common.ExtendedKeys, PreEmptive.Analytics.Common.Tags.BinaryInfoTag)</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>EnumRule</rule>
+            <markeditem>
+                <itemtype>Field</itemtype>
+                <name>PreEmptive.Analytics.Common.ExceptionType::Uncaught</name>
+            </markeditem>
+            <operation>was excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>ToString() is invoked on this enum type in method PreEmptive.Analytics.Common.Messages.Fault::void .ctor(PreEmptive.Analytics.Common.IPlatform, PreEmptive.Analytics.Common.ExceptionInfo, System.Guid, PreEmptive.Analytics.Common.ExtendedKeys, PreEmptive.Analytics.Common.Tags.BinaryInfoTag)</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>EnumRule</rule>
+            <markeditem>
+                <itemtype>Field</itemtype>
+                <name>PreEmptive.Analytics.Common.ExceptionType::Thrown</name>
+            </markeditem>
+            <operation>was excluded</operation>
+            <component>from renaming</component>
+            <reasons>
+                <reason>ToString() is invoked on this enum type in method PreEmptive.Analytics.Common.Messages.Fault::void .ctor(PreEmptive.Analytics.Common.IPlatform, PreEmptive.Analytics.Common.ExceptionInfo, System.Guid, PreEmptive.Analytics.Common.ExtendedKeys, PreEmptive.Analytics.Common.Tags.BinaryInfoTag)</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>EnumRule</rule>
+            <markeditem>
+                <itemtype>Field</itemtype>
+                <name>PreEmptive.Analytics.Common.ExceptionType::Thrown</name>
+            </markeditem>
+            <operation>was excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>ToString() is invoked on this enum type in method PreEmptive.Analytics.Common.Messages.Fault::void .ctor(PreEmptive.Analytics.Common.IPlatform, PreEmptive.Analytics.Common.ExceptionInfo, System.Guid, PreEmptive.Analytics.Common.ExtendedKeys, PreEmptive.Analytics.Common.Tags.BinaryInfoTag)</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>EnumRule</rule>
+            <markeditem>
+                <itemtype>Field</itemtype>
+                <name>PreEmptive.Analytics.Common.ExceptionType::Caught</name>
+            </markeditem>
+            <operation>was excluded</operation>
+            <component>from renaming</component>
+            <reasons>
+                <reason>ToString() is invoked on this enum type in method PreEmptive.Analytics.Common.Messages.Fault::void .ctor(PreEmptive.Analytics.Common.IPlatform, PreEmptive.Analytics.Common.ExceptionInfo, System.Guid, PreEmptive.Analytics.Common.ExtendedKeys, PreEmptive.Analytics.Common.Tags.BinaryInfoTag)</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>InternalXmlSerializationRule</rule>
+            <markeditem>
+                <itemtype>Method</itemtype>
+                <name>GeneralToolkitLib.DataTypes.BinaryTree`1::System.Collections.Generic.IEnumerator`1&lt;!0&gt; GetEnumerator()</name>
+            </markeditem>
+            <operation>was excluded</operation>
+            <component>from renaming</component>
+            <reasons>
+                <reason>Method GetEnumerator in System.Collections.IEnumerable</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>InternalXmlSerializationRule</rule>
+            <markeditem>
+                <itemtype>Method</itemtype>
+                <name>GeneralToolkitLib.DataTypes.BinaryTree`1::void Add(!0)</name>
+            </markeditem>
+            <operation>was excluded</operation>
+            <component>from renaming</component>
+            <reasons>
+                <reason>Method Add in System.Collections.IEnumerable</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>InternalXmlSerializationRule</rule>
+            <markeditem>
+                <itemtype>Method</itemtype>
+                <name>GeneralToolkitLib.DataTypes.BinaryTree`1::void Add(GeneralToolkitLib.DataTypes.BinaryTreeNode`1&lt;!0&gt;)</name>
+            </markeditem>
+            <operation>was excluded</operation>
+            <component>from renaming</component>
+            <reasons>
+                <reason>Method Add in System.Collections.IEnumerable</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>PreEmptive.Analytics.Common.MessageBatch::Messages</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>PreEmptive.Analytics.Common.Message::TagName</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>FileSystemImage.FileSystem.FileSystemDirectory::SubDirectoriesTotal</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>&lt;&gt;f__AnonymousType1`2::Value</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>FileSystemImage.FileSystem.FileSystemFile::FullName</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>PreEmptive.Analytics.Common.Tags.Tag::TagName</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>FileSystemImage.FileSystem.FileSystemDirectory::Name</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>&lt;&gt;f__AnonymousType0`2::version</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>FileSystemImage.FileSystem.FileSystemDirectory::FilesTotal</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>FileSystemImage.FileSystem.FileSystemFile::FileAttributes</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>PreEmptive.Analytics.Common.MessageBatch::DateCreated</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>FileSystemImage.FileSystem.FileSystemDirectory::ModifiedDate</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>FileSystemImage.FileSystem.FileSystemFile::LastAccessDate</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>PreEmptive.Analytics.Common.MessageBatch::Configuration</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>PreEmptive.Analytics.Common.MessageBatch::FailureCount</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>FileSystemImage.FileTree.TreeSearchResult::file</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>FileSystemImage.FileSystem.FileSystemDirectory::FileSizeTotal</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>&lt;&gt;f__AnonymousType2`2::Chr</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>FileSystemImage.FileSystem.FileSystemDirectory::SubDirAccessDenied</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>FileSystemImage.FileTree.TreeSearchResult::path</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>FileSystemImage.FileSystem.FileSystemFile::CreateDate</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>&lt;&gt;f__AnonymousType0`2::capacity</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>PreEmptive.Analytics.Common.Message::BinaryInfo</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>PreEmptive.Analytics.Common.Tags.Tag::InnerTags</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>FileSystemImage.FileSystem.FileSystemFile::FileSize</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>FileSystemImage.FileSystem.FileSystemDirectory::CreateDate</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>&lt;&gt;f__AnonymousType1`2::Index</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>FileSystemImage.FileSystem.FileSystemDirectory::FileList</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>FileSystemImage.FileSystem.FileSystemFile::Name</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>&lt;&gt;f__AnonymousType2`2::Index</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>FileSystemImage.FileSystem.FileSystemFile::ModifiedDate</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>PreEmptive.Analytics.Common.MessageBatch::AgentInfo</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>PreEmptive.Analytics.Common.Tags.Tag::TagDescription</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+        <detail warning="false">
+            <rule>LINQRule</rule>
+            <markeditem>
+                <itemtype>Property</itemtype>
+                <name>FileSystemImage.FileSystem.FileSystemDirectory::DirectoryList</name>
+            </markeditem>
+            <operation>was conditionally excluded</operation>
+            <component>from pruning</component>
+            <reasons>
+                <reason>Types passed as arguments to methods in System.Linq.Enumerable or System.Linq.Queryable must retain their properties.</reason>
+            </reasons>
+        </detail>
+    </smartdetails>
+</dotfuscatorSmartObfuscation>
