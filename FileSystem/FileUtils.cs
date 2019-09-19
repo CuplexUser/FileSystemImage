@@ -71,7 +71,7 @@ namespace FileSystemImage.FileSystem
             private readonly ProgressCallback _progressCallback;
             private readonly Thread _progressMonitorThread;
             private readonly Thread _workerThread;
-            private readonly ManualResetEvent progressManualResetEvent;
+            private readonly ManualResetEvent _progressManualResetEvent;
             private double _currentProgress;
             private double _maxProgress;
             private bool _runThMain;
@@ -84,7 +84,7 @@ namespace FileSystemImage.FileSystem
                 _fileDataReturnCallback = fileDataReturnCallback;
                 _workerThread = new Thread(ThMain);
                 _progressMonitorThread = new Thread(ThProgressMonitor);
-                progressManualResetEvent = new ManualResetEvent(true);
+                _progressManualResetEvent = new ManualResetEvent(true);
             }
 
             private void ThProgressMonitor()
@@ -94,7 +94,7 @@ namespace FileSystemImage.FileSystem
                     if (_progressCallback != null && _maxProgress > 0)
                         _progressCallback.Invoke(_currentProgress/_maxProgress);
 
-                    progressManualResetEvent.WaitOne(PROGRESS_UPDATE_INTERVAL);
+                    _progressManualResetEvent.WaitOne(PROGRESS_UPDATE_INTERVAL);
                 }
             }
 
@@ -182,9 +182,8 @@ namespace FileSystemImage.FileSystem
                     Task.WaitAll(awaitTasksList.ToArray());
                 }
 
-                progressManualResetEvent.Set();
-                if (_fileDataReturnCallback != null)
-                    _fileDataReturnCallback.Invoke(fileSystemDrive);
+                _progressManualResetEvent.Set();
+                _fileDataReturnCallback?.Invoke(fileSystemDrive);
 
                 TaskIsRunning = false;
             }

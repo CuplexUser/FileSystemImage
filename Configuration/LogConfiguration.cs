@@ -8,7 +8,7 @@ namespace FileSystemImage.Configuration
 {
     public static class LogConfiguration
     {
-        // If debug use executing assembly path otherwise use appdata
+        // If debug use executing assembly path otherwise use app-data
         public static void ConfigureSerilog()
         {
             var logLevel = !ApplicationBuildConfig.DebugMode ? LogEventLevel.Warning : LogEventLevel.Verbose;

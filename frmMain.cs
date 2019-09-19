@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace FileSystemImage
         {
             InitializeComponent();
             FolderTreeView.Nodes.Clear();
-            
+
             // Serilog already configured and initialized at this stage in program.cs so
             _logger = Log.Logger;
         }
@@ -51,7 +52,7 @@ namespace FileSystemImage
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = new frmCreateSysImage();
+            var form = new FrmCreateSysImage();
             form.SetMainWindow(this);
             form.ShowDialog(this);
         }
@@ -69,7 +70,7 @@ namespace FileSystemImage
                 root.SelectedImageIndex = 1;
                 root.StateImageIndex = 1;
                 root.Name = fileSystemDrive.DriveLetter;
-                root.Tag = new ROOT_Identifyer();
+                root.Tag = new RootIdentifier();
 
                 foreach (FileSystemDirectory dir in _currentFileSystemDrive.DirectoryList)
                 {
@@ -106,7 +107,7 @@ namespace FileSystemImage
 
                 LoadAndSaveProgressInfoLabel.Text = "Opening file: " + openFileDialog.FileName;
                 LoadFileSystemImageFromFile(_currentFileName, password);
-                Log.Debug("Successfuly opened file: {FileName}", openFileDialog.FileName);
+                Log.Debug("Successful opened file: {FileName}", openFileDialog.FileName);
             }
         }
 
@@ -137,8 +138,8 @@ namespace FileSystemImage
             LoadAndSaveProgressInfoLabel.Visible = false;
             openToolStripMenuItem.Enabled = true;
 
-            if (_currentFileSystemDrive == null || _currentFileSystemDrive.DirectoryList == null)
-                MessageBox.Show("Faild to open file!");
+            if (_currentFileSystemDrive?.DirectoryList == null)
+                MessageBox.Show("Failed to open file!");
             else
                 LoadFileSystemDrive(_currentFileSystemDrive);
 
@@ -274,22 +275,22 @@ namespace FileSystemImage
 
         private void FolderTreeView_AfterExpand(object sender, TreeViewEventArgs e)
         {
-            //Update chile nodes
+            //Update child nodes
             TreeNode selectedNode = e.Node;
-            var nodeTreversalStack = new Stack<string>();
+            var nodeTraversalStack = new Stack<string>();
             TreeNode rootNode = selectedNode;
             var directoryList = _currentFileSystemDrive.DirectoryList;
 
-            nodeTreversalStack.Push(rootNode.Text);
+            nodeTraversalStack.Push(rootNode.Text);
             while (rootNode.Parent != null)
             {
                 rootNode = rootNode.Parent;
-                nodeTreversalStack.Push(rootNode.Text);
+                nodeTraversalStack.Push(rootNode.Text);
             }
 
-            while (nodeTreversalStack.Count > 0)
+            while (nodeTraversalStack.Count > 0)
             {
-                string currentItem = nodeTreversalStack.Pop();
+                string currentItem = nodeTraversalStack.Pop();
                 for (int i = 0; i < directoryList.Count; i++)
                 {
                     FileSystemDirectory dir = directoryList[i];
@@ -310,7 +311,7 @@ namespace FileSystemImage
                 if (firstNode.Nodes.Count == 0)
                 {
                     FileSystemDirectory subDir = directoryList.SingleOrDefault(d => d.Name == firstNode.Text);
-                    if (subDir != null && subDir.DirectoryList != null)
+                    if (subDir?.DirectoryList != null)
                     {
                         foreach (FileSystemDirectory fsd in subDir.DirectoryList)
                             firstNode.Nodes.Add(new TreeNode(fsd.Name));
@@ -337,10 +338,10 @@ namespace FileSystemImage
         {
             var directoryList = _currentFileSystemDrive.DirectoryList;
             List<FileSystemFileWrapper> fileSystemList = null;
-            var nodeTreversalStack = new Stack<string>();
+            var nodeTraversalStack = new Stack<string>();
             TreeNode rootNode = selectedNode;
 
-            nodeTreversalStack.Push(rootNode.Text);
+            nodeTraversalStack.Push(rootNode.Text);
 
             //Root node
             if (rootNode.Parent == null)
@@ -354,23 +355,23 @@ namespace FileSystemImage
             while (rootNode.Parent != null)
             {
                 rootNode = rootNode.Parent;
-                nodeTreversalStack.Push(rootNode.Text);
+                nodeTraversalStack.Push(rootNode.Text);
             }
 
-            nodeTreversalStack.Pop();
+            nodeTraversalStack.Pop();
 
-            while (nodeTreversalStack.Count > 0)
+            while (nodeTraversalStack.Count > 0)
             {
-                string currentItem = nodeTreversalStack.Pop();
+                string currentItem = nodeTraversalStack.Pop();
                 for (int i = 0; i < directoryList.Count; i++)
                 {
                     FileSystemDirectory dir = directoryList[i];
                     if (dir.Name == currentItem)
                     {
-                        if (nodeTreversalStack.Count == 0 && dir.FileList != null)
+                        if (nodeTraversalStack.Count == 0 && dir.FileList != null)
                             fileSystemList = dir.FileList.ConvertAll(FileSystemFileWrapper.ConvertObject);
-                        directoryList = dir.DirectoryList;
 
+                        directoryList = dir.DirectoryList;
 
                         if (setStatusBarInfo)
                             DirectoryInfoDataLabel.Text = GetFileSystemDirectoryData(dir);
@@ -391,17 +392,17 @@ namespace FileSystemImage
         private string GetRootDirectoryData(FileSystemDrive fileSystemDrive)
         {
             long directories = 0;
-            long files = fileSystemDrive.RootFileList != null ? fileSystemDrive.RootFileList.Count : 0;
-            long FileSizeTotal = fileSystemDrive.RootFileList != null ? fileSystemDrive.RootFileList.Sum(f => f.FileSize) : 0;
+            long files = fileSystemDrive.RootFileList?.Count ?? 0;
+            long fileSizeTotal = fileSystemDrive.RootFileList?.Sum(f => f.FileSize) ?? 0;
 
             foreach (FileSystemDirectory fileSystemDirectory in fileSystemDrive.DirectoryList)
             {
                 directories += fileSystemDirectory.SubDirectoriesTotal + 1;
                 files += fileSystemDirectory.FilesTotal;
-                FileSizeTotal += fileSystemDirectory.FileSizeTotal;
+                fileSizeTotal += fileSystemDirectory.FileSizeTotal;
             }
 
-            return "Directories: " + directories + " | Files: " + files + " | Total file size: " + GeneralConverters.FileSizeToStringFormater.ConvertFileSizeToString(FileSizeTotal, 2);
+            return "Directories: " + directories + " | Files: " + files + " | Total file size: " + GeneralConverters.FileSizeToStringFormater.ConvertFileSizeToString(fileSizeTotal, 2);
         }
 
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -412,10 +413,10 @@ namespace FileSystemImage
                 MessageBox.Show("No selected path found");
                 return;
             }
-            if (currentExpandedNode.Tag is ROOT_Identifyer && MessageBox.Show(this, "Update entire drive", "Are you sure you want to update the entire drive?", MessageBoxButtons.YesNo) != DialogResult.Yes)
+            if (currentExpandedNode.Tag is RootIdentifier && MessageBox.Show(this, "Update entire drive", "Are you sure you want to update the entire drive?", MessageBoxButtons.YesNo) != DialogResult.Yes)
                 return;
 
-            string path = buildPathFromTreeNode(currentExpandedNode);
+            string path = BuildPathFromTreeNode(currentExpandedNode);
             FileSystemDirectory fileSystemDirectory = GetFileSystemDirectoryFromPath(path);
 
             try
@@ -468,12 +469,12 @@ namespace FileSystemImage
             return fsDirectory;
         }
 
-        private string buildPathFromTreeNode(TreeNode node)
+        private string BuildPathFromTreeNode(TreeNode node)
         {
             var sb = new StringBuilder();
             while (node != null)
             {
-                sb.Append("\\" + node.Text);
+                sb.Append("\\" + node.Text.Trim('\\'));
                 node = node.Parent;
             }
 
@@ -482,16 +483,17 @@ namespace FileSystemImage
             return path;
         }
 
-        private struct ROOT_Identifyer
+        private struct RootIdentifier
         {
+            public string Guid => "6F99E272-FD0A-4ED3-B33D-B41716886301";
         }
 
         #region FileListDataGridView Custom Render
 
-        private const int CUSTOM_CONTENT_HEIGHT = 4;
-        private readonly Color GridViewSelectionBorderColor = ColorTranslator.FromHtml("#7da2ce");
-        private readonly Color gridViewGradientBackgroundColorStart = ColorTranslator.FromHtml("#b2e1ff");
-        private readonly Color gridViewGradientBackgroundColorStop = ColorTranslator.FromHtml("#66b6fc");
+        private const int CustomContentHeight = 4;
+        private readonly Color _gridViewSelectionBorderColor = ColorTranslator.FromHtml("#7da2ce");
+        private readonly Color _gridViewGradientBackgroundColorStart = ColorTranslator.FromHtml("#b2e1ff");
+        private readonly Color _gridViewGradientBackgroundColorStop = ColorTranslator.FromHtml("#66b6fc");
 
         private void InitFileListDataGridView()
         {
@@ -500,7 +502,7 @@ namespace FileSystemImage
             FileListDataGridView.RowTemplate.DefaultCellStyle.SelectionBackColor = Color.Transparent;
             FileListDataGridView.RowTemplate.DefaultCellStyle.SelectionForeColor = Color.Black;
 
-            FileListDataGridView.RowTemplate.Height += CUSTOM_CONTENT_HEIGHT;
+            FileListDataGridView.RowTemplate.Height += CustomContentHeight;
             FileListDataGridView.CellBorderStyle = DataGridViewCellBorderStyle.None;
             FileListDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             FileListDataGridView.RowPrePaint += FileListDataGridView_RowPrePaint;
@@ -517,11 +519,10 @@ namespace FileSystemImage
                 var rowBounds = new Rectangle(0, e.RowBounds.Top, FileListDataGridView.Columns.GetColumnsWidth(DataGridViewElementStates.Visible) - FileListDataGridView.HorizontalScrollingOffset + 1, e.RowBounds.Height);
 
                 // Paint the custom selection background.
-                using (Brush backbrush = new LinearGradientBrush(rowBounds, gridViewGradientBackgroundColorStart, gridViewGradientBackgroundColorStop, LinearGradientMode.Vertical))
+                using (Brush backbrush = new LinearGradientBrush(rowBounds, _gridViewGradientBackgroundColorStart, _gridViewGradientBackgroundColorStop, LinearGradientMode.Vertical))
                 {
                     e.Graphics.FillRectangle(backbrush, rowBounds);
-                    var p = new Pen(backbrush, 1);
-                    p.Color = GridViewSelectionBorderColor;
+                    var p = new Pen(backbrush, 1) { Color = _gridViewSelectionBorderColor };
                     e.Graphics.DrawRectangle(p, rowBounds);
                 }
             }
@@ -536,8 +537,7 @@ namespace FileSystemImage
             }
             finally
             {
-                if (forebrush != null)
-                    forebrush.Dispose();
+                forebrush?.Dispose();
             }
         }
 
@@ -573,8 +573,7 @@ namespace FileSystemImage
 
             if (e.Button == MouseButtons.Right)
             {
-                var control = sender as Control;
-                if (control != null) contextMenuStripFile.Show(control, e.X, e.Y);
+                if (sender is Control control) contextMenuStripFile.Show(control, e.X, e.Y);
             }
         }
 
@@ -585,8 +584,7 @@ namespace FileSystemImage
 
             foreach (DataGridViewRow selectedRow in FileListDataGridView.SelectedRows)
             {
-                var selectedFile = selectedRow.DataBoundItem as FileSystemFileWrapper;
-                if (selectedFile != null && selectedFile.FilePath != null)
+                if (selectedRow.DataBoundItem is FileSystemFileWrapper selectedFile && selectedFile.FilePath != null)
                 {
                     paths.Add(selectedFile.FilePath);
                 }
@@ -603,8 +601,7 @@ namespace FileSystemImage
 
             foreach (DataGridViewRow selectedRow in FileListDataGridView.SelectedRows)
             {
-                var selectedFile = selectedRow.DataBoundItem as FileSystemFileWrapper;
-                if (selectedFile != null && selectedFile.FilePath != null)
+                if (selectedRow.DataBoundItem is FileSystemFileWrapper selectedFile && selectedFile.FilePath != null)
                 {
                     sb.AppendLine(selectedFile.FilePath);
                 }
@@ -622,9 +619,8 @@ namespace FileSystemImage
         private void createSFVFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (FileListDataGridView.SelectedRows.Count == 0) return;
-            var fileSystemFileWrapper = (FileListDataGridView.SelectedRows[0].DataBoundItem as FileSystemFileWrapper);
 
-            if (fileSystemFileWrapper == null)
+            if (!(FileListDataGridView.SelectedRows[0].DataBoundItem is FileSystemFileWrapper fileSystemFileWrapper))
             {
                 MessageBox.Show("Unexprected error in createSFVFile. DataBoundItem is " + FileListDataGridView.SelectedRows[0].DataBoundItem.GetType());
                 return;
@@ -663,8 +659,7 @@ namespace FileSystemImage
 
             foreach (DataGridViewRow selectedRow in FileListDataGridView.SelectedRows)
             {
-                var selectedFile = selectedRow.DataBoundItem as FileSystemFileWrapper;
-                if (selectedFile != null && selectedFile.FilePath != null)
+                if (selectedRow.DataBoundItem is FileSystemFileWrapper selectedFile && selectedFile.FilePath != null)
                 {
                     paths.Add(selectedFile.FilePath);
                 }
@@ -676,9 +671,8 @@ namespace FileSystemImage
         private void createMD5FileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (FileListDataGridView.SelectedRows.Count == 0) return;
-            var fileSystemFileWrapper = (FileListDataGridView.SelectedRows[0].DataBoundItem as FileSystemFileWrapper);
 
-            if (fileSystemFileWrapper == null)
+            if (!(FileListDataGridView.SelectedRows[0].DataBoundItem is FileSystemFileWrapper fileSystemFileWrapper))
             {
                 MessageBox.Show("Unexprected error in createMD5File. DataBoundItem is " + FileListDataGridView.SelectedRows[0].DataBoundItem.GetType());
                 return;
@@ -717,14 +711,70 @@ namespace FileSystemImage
 
             foreach (DataGridViewRow selectedRow in FileListDataGridView.SelectedRows)
             {
-                var selectedFile = selectedRow.DataBoundItem as FileSystemFileWrapper;
-                if (selectedFile != null && selectedFile.FilePath != null)
+                if (selectedRow.DataBoundItem is FileSystemFileWrapper selectedFile && selectedFile.FilePath != null)
                 {
                     paths.Add(selectedFile.FilePath);
                 }
             }
 
             checksumFileGenerator.GenrateMD5FileAsync(paths, sfvFilename);
+        }
+
+        private void FolderTreeView_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && FolderTreeView.Nodes.Count > 0)
+            {
+                var selectedItem = FolderTreeView.SelectedNode;
+                if (selectedItem != null && sender is Control control)
+                {
+                    contextMenuStripFolder.Show(control, e.X, e.Y);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Folder Context Menu Events
+
+        private void TsMenuItemUpdateFolderRecursive_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TsMenuItemUpdateFolder_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TsMenuItemShowInExplorer_Click(object sender, EventArgs e)
+        {
+            var selectedItem = FolderTreeView.SelectedNode;
+            if (selectedItem != null)
+            {
+                string fullPath = FileSystemHelper.GetCorrectFullPath(selectedItem);
+                Process.Start("explorer", fullPath);
+            }
+        }
+
+        private void TsMenuItemFolderProperties_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TsMenuItemCopyPath_Click(object sender, EventArgs e)
+        {
+            var selectedItem = FolderTreeView.SelectedNode;
+            if (selectedItem != null)
+            {
+                string fullPath = FileSystemHelper.GetCorrectFullPath(selectedItem);
+                Clipboard.Clear();
+                Clipboard.SetText(fullPath, TextDataFormat.Text);
+            }
+        }
+
+        private void TsMenuItemDeleteFolder_Click(object sender, EventArgs e)
+        {
+
         }
 
         #endregion

@@ -7,18 +7,14 @@ namespace FileSystemImage.FileTree
         //Storage for all tree nodes
 
         // Root node created on init
-        private readonly TreeNode root;
 
         public FileSystemTree()
         {
-            this.FileRecords = new FileAllocationTable();
-            this.root = new TreeNode(false, "Root", 0, 0);
+            FileRecords = new FileAllocationTable();
+            Root = new TreeNode(false, "Root", 0, 0);
         }
 
-        public TreeNode Root
-        {
-            get { return this.root; }
-        }
+        public TreeNode Root { get; }
 
         private FileAllocationTable FileRecords { get; }
 
@@ -31,31 +27,31 @@ namespace FileSystemImage.FileTree
 
         public static FileSystemTree RestoreInstance(byte[] data)
         {
-            FileSystemTree fileSystemTree = new FileSystemTree();
+            var fileSystemTree = new FileSystemTree();
             return fileSystemTree;
         }
     }
 
     public class FileAllocationTable
     {
-        private long cursor;
+        private long _cursor;
 
         public FileAllocationTable()
         {
-            this.FileRecords = new Hashtable();
+            FileRecords = new Hashtable();
         }
 
         public Hashtable FileRecords { get; private set; }
 
         public long AddTreeNode(TreeNode node)
         {
-            this.FileRecords.Add(this.cursor, node);
-            return this.cursor++;
+            FileRecords.Add(_cursor, node);
+            return _cursor++;
         }
 
         public void RemoveTreeNode(long key)
         {
-            this.FileRecords.Remove(key);
+            FileRecords.Remove(key);
         }
     }
 }

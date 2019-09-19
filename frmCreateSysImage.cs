@@ -8,23 +8,23 @@ using Serilog;
 
 namespace FileSystemImage
 {
-    public partial class frmCreateSysImage : Form
+    public partial class FrmCreateSysImage : Form
     {
         private readonly object _fileSystemDriveLock = new object();
-        private FileSystemDrive currentFileSystemDrive;
-        private FrmMain mainWindow;
+        private FileSystemDrive _currentFileSystemDrive;
+        private FrmMain _mainWindow;
 
-        public frmCreateSysImage()
+        public FrmCreateSysImage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         public void SetMainWindow(FrmMain frm)
         {
-            this.mainWindow = frm;
+            _mainWindow = frm;
         }
 
-        private void frmCreateSysImage_Load(object sender, EventArgs e)
+        protected void frmCreateSysImage_Load(object sender, EventArgs e)
         {
             DriveInfo[] driveInfoArr = null;
             try
@@ -41,7 +41,7 @@ namespace FileSystemImage
             {
                 try
                 {
-                    this.drpDrive.Items.Add(new ListItem(GetDriveInfoListItemText(di), di.Name));
+                    drpDrive.Items.Add(new ListItem(GetDriveInfoListItemText(di), di.Name));
                     //this.drpDrive.Items.Add(string.IsNullOrEmpty(di.VolumeLabel)
                     //    ? new ListItem(di.Name + " ( " + GeneralConverters.FormatFileSizeToString(di.TotalSize) + " )", di.Name)
                     //    : new ListItem(di.Name + " [" + di.VolumeLabel + "]" + " ( " + GeneralConverters.FormatFileSizeToString(di.TotalSize) + " )", di.Name));
@@ -52,87 +52,87 @@ namespace FileSystemImage
                 }
             }
 
-            if(this.drpDrive.Items.Count > 0)
-                this.drpDrive.SelectedIndex = 0;
+            if(drpDrive.Items.Count > 0)
+                drpDrive.SelectedIndex = 0;
         }
 
         private string GetDriveInfoListItemText(DriveInfo driveInfo)
         {
             string driveInfoText = driveInfo.VolumeLabel ?? "";
             if(!string.IsNullOrEmpty(driveInfo.Name))
-                driveInfoText += string.Format(" ({0}) ", driveInfo.Name.Replace("\\", ""));
+                driveInfoText += $" ({driveInfo.Name.Replace("\\", "")}) ";
             else
                 driveInfoText +=  " [" + driveInfo.VolumeLabel + "]";
 
-            driveInfoText += string.Format("{0} free of {1} [{2}, {3}]", GeneralConverters.FormatFileSizeToString(driveInfo.TotalFreeSpace), GeneralConverters.FormatFileSizeToString(driveInfo.TotalSize),
-                driveInfo.DriveType, driveInfo.DriveFormat);
+            driveInfoText +=
+                $"{GeneralConverters.FormatFileSizeToString(driveInfo.TotalFreeSpace)} free of {GeneralConverters.FormatFileSizeToString(driveInfo.TotalSize)} [{driveInfo.DriveType}, {driveInfo.DriveFormat}]";
 
             return driveInfoText;
         }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            if(this.drpDrive.SelectedIndex >= 0)
+            if(drpDrive.SelectedIndex >= 0)
             {
-                FileUtils.CreateFileSystemDriveData(((ListItem)this.drpDrive.Items[this.drpDrive.SelectedIndex]).Value, this.ProgressUpdate, this.SetFileSystemDrive);
-                this.btnStart.Enabled = false;
-                this.btnCancel.Enabled = true;
-                this.btnSave.Enabled = false;
+                FileUtils.CreateFileSystemDriveData(((ListItem)drpDrive.Items[drpDrive.SelectedIndex]).Value, ProgressUpdate, SetFileSystemDrive);
+                btnStart.Enabled = false;
+                btnCancel.Enabled = true;
+                btnSave.Enabled = false;
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             FileUtils.CancelCreateFileSystemDriveData();
-            this.btnStart.Enabled = true;
-            this.btnCancel.Enabled = false;
+            btnStart.Enabled = true;
+            btnCancel.Enabled = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if(this.mainWindow != null)
+            if(_mainWindow != null)
             {
-                this.mainWindow.LoadFileSystemDrive(this.currentFileSystemDrive);
+                _mainWindow.LoadFileSystemDrive(_currentFileSystemDrive);
                 Close();
             }
         }
 
-        //Forign thread
+        //Foreign thread
         public void ProgressUpdate(double percentComplete)
         {
-            Invoke(new ProgressCallback(this.ProgressUpdateNativeThead), percentComplete);
+            Invoke(new ProgressCallback(ProgressUpdateNativeThead), percentComplete);
         }
 
         //NativeThead
         protected void ProgressUpdateNativeThead(double percentComplete)
         {
-            int pbarUpdateValue = Convert.ToInt32(Math.Round(this.progressBar1.Maximum*percentComplete, 0));
-            if(pbarUpdateValue >= 0 && pbarUpdateValue < this.progressBar1.Maximum)
-                this.progressBar1.Value = pbarUpdateValue;
+            int pbarUpdateValue = Convert.ToInt32(Math.Round(progressBar1.Maximum*percentComplete, 0));
+            if(pbarUpdateValue >= 0 && pbarUpdateValue < progressBar1.Maximum)
+                progressBar1.Value = pbarUpdateValue;
             else
-                this.progressBar1.Value = this.progressBar1.Maximum;
+                progressBar1.Value = progressBar1.Maximum;
         }
 
-        //Forign thread
+        //Foreign thread
         public void SetFileSystemDrive(FileSystemDrive fileSystemDrive)
         {
-            lock (this._fileSystemDriveLock)
+            lock (_fileSystemDriveLock)
             {
-                this.currentFileSystemDrive = fileSystemDrive;
+                _currentFileSystemDrive = fileSystemDrive;
             }
             if(Visible)
-                Invoke(new CreateFileSystemImageComplete(this.SetFileSystemDriveComplete));
+                Invoke(new CreateFileSystemImageComplete(SetFileSystemDriveComplete));
             FileUtils.DeAllocateWorkerThread();
         }
 
         //NativeThead
         protected void SetFileSystemDriveComplete()
         {
-            if(this.currentFileSystemDrive != null)
+            if(_currentFileSystemDrive != null)
             {
-                this.btnSave.Enabled = true;
-                this.btnCancel.Enabled = false;
-                this.btnStart.Enabled = true;
+                btnSave.Enabled = true;
+                btnCancel.Enabled = false;
+                btnStart.Enabled = true;
             }
         }
 

@@ -1,6 +1,6 @@
 ﻿namespace FileSystemImage
 {
-    partial class frmCreateSysImage
+    partial class FrmCreateSysImage
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCreateSysImage));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCreateSysImage));
             this.drpDrive = new System.Windows.Forms.ComboBox();
             this.btnStart = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -121,7 +121,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmCreateSysImage";
+            this.Name = "FrmCreateSysImage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Create drive image";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmCreateSysImage_FormClosing);

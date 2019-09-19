@@ -144,7 +144,7 @@ namespace FileSystemImage
             {
                 try
                 {
-                    string p = item.Path + "\\" + item.file.Name;
+                    string p = item.Path + "\\" + item.File.Name;
                     string args = $"/e, /select, \"{p}\"";
 
                     var info = new ProcessStartInfo

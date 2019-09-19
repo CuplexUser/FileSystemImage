@@ -49,11 +49,11 @@
             treeNode1,
             treeNode5,
             treeNode9});
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
             this.imgIconImgList = new System.Windows.Forms.ImageList(this.components);
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,6 +105,15 @@
             this.modifiedDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.createDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fileSystemFileWrapperBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.contextMenuStripFolder = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsMenuItemUpdateFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsMenuItemUpdateFolderRecursive = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsMenuItemShowInExplorer = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsMenuItemFolderProperties = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsMenuItemCopyPath = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsMenuItemDeleteFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenu.SuspendLayout();
             this.MainContentPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -115,6 +124,7 @@
             this.statusStrip1.SuspendLayout();
             this.contextMenuStripFile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemFileWrapperBindingSource)).BeginInit();
+            this.contextMenuStripFolder.SuspendLayout();
             this.SuspendLayout();
             // 
             // imgIconImgList
@@ -148,51 +158,54 @@
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
+            this.fileToolStripMenuItem.Text = "&File";
             // 
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
-            this.newToolStripMenuItem.Text = "New";
+            this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.newToolStripMenuItem.Text = "&New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
-            this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(111, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(143, 6);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.saveAsToolStripMenuItem.Text = "Save As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(111, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(143, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
@@ -204,14 +217,14 @@
             this.selectAllMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.editToolStripMenuItem.Text = "Edit";
+            this.editToolStripMenuItem.Text = "&Edit";
             // 
             // copyFileMenuItem
             // 
             this.copyFileMenuItem.Name = "copyFileMenuItem";
             this.copyFileMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
             this.copyFileMenuItem.Size = new System.Drawing.Size(203, 22);
-            this.copyFileMenuItem.Text = "Copy";
+            this.copyFileMenuItem.Text = "&Copy";
             this.copyFileMenuItem.Click += new System.EventHandler(this.copyFileMenuItem_Click);
             // 
             // copyFilePathMenuItem
@@ -220,7 +233,7 @@
             this.copyFilePathMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.C)));
             this.copyFilePathMenuItem.Size = new System.Drawing.Size(203, 22);
-            this.copyFilePathMenuItem.Text = "Copy Path";
+            this.copyFilePathMenuItem.Text = "Copy &Path";
             this.copyFilePathMenuItem.Click += new System.EventHandler(this.copyFilePathMenuItem_Click);
             // 
             // copyFileToolStripMenuItem
@@ -232,7 +245,7 @@
             // 
             this.selectAllMenuItem.Name = "selectAllMenuItem";
             this.selectAllMenuItem.Size = new System.Drawing.Size(203, 22);
-            this.selectAllMenuItem.Text = "Select All";
+            this.selectAllMenuItem.Text = "&Select All";
             this.selectAllMenuItem.Click += new System.EventHandler(this.selectAllMenuItem_Click);
             // 
             // toolsToolStripMenuItem
@@ -242,8 +255,8 @@
             this.clearToolStripMenuItem,
             this.searchToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.toolsToolStripMenuItem.Text = "Tools";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.toolsToolStripMenuItem.Text = "&Tools";
             // 
             // driveInfoToolStripMenuItem
             // 
@@ -264,7 +277,7 @@
             this.searchToolStripMenuItem.Name = "searchToolStripMenuItem";
             this.searchToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
             this.searchToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.searchToolStripMenuItem.Text = "Search";
+            this.searchToolStripMenuItem.Text = "&Search";
             this.searchToolStripMenuItem.Click += new System.EventHandler(this.searchToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
@@ -273,13 +286,13 @@
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.Text = "&Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // openFileDialog1
@@ -354,6 +367,7 @@
             this.FolderTreeView.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.FolderTreeView_BeforeExpand);
             this.FolderTreeView.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.FolderTreeView_AfterExpand);
             this.FolderTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.FolderTreeView_AfterSelect);
+            this.FolderTreeView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FolderTreeView_MouseClick);
             // 
             // FileListDataGridView
             // 
@@ -388,9 +402,9 @@
             // Attributes
             // 
             this.Attributes.DataPropertyName = "Attributes";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.Attributes.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle31.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.Attributes.DefaultCellStyle = dataGridViewCellStyle31;
             this.Attributes.HeaderText = "Attributes";
             this.Attributes.MinimumWidth = 60;
             this.Attributes.Name = "Attributes";
@@ -527,8 +541,8 @@
             // 
             this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.nameDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle32.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.nameDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle32;
             this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
             this.nameDataGridViewTextBoxColumn.MinimumWidth = 75;
             this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
@@ -537,9 +551,9 @@
             // fileSizeDataGridViewTextBoxColumn
             // 
             this.fileSizeDataGridViewTextBoxColumn.DataPropertyName = "FileSize";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.fileSizeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle33.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.fileSizeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle33;
             this.fileSizeDataGridViewTextBoxColumn.HeaderText = "FileSize";
             this.fileSizeDataGridViewTextBoxColumn.MinimumWidth = 60;
             this.fileSizeDataGridViewTextBoxColumn.Name = "fileSizeDataGridViewTextBoxColumn";
@@ -549,8 +563,8 @@
             // modifiedDateDataGridViewTextBoxColumn
             // 
             this.modifiedDateDataGridViewTextBoxColumn.DataPropertyName = "ModifiedDate";
-            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.modifiedDateDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle34.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.modifiedDateDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle34;
             this.modifiedDateDataGridViewTextBoxColumn.HeaderText = "Modified";
             this.modifiedDateDataGridViewTextBoxColumn.MinimumWidth = 70;
             this.modifiedDateDataGridViewTextBoxColumn.Name = "modifiedDateDataGridViewTextBoxColumn";
@@ -560,8 +574,8 @@
             // createDateDataGridViewTextBoxColumn
             // 
             this.createDateDataGridViewTextBoxColumn.DataPropertyName = "CreateDate";
-            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.createDateDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle35.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.createDateDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle35;
             this.createDateDataGridViewTextBoxColumn.HeaderText = "Created";
             this.createDateDataGridViewTextBoxColumn.MinimumWidth = 70;
             this.createDateDataGridViewTextBoxColumn.Name = "createDateDataGridViewTextBoxColumn";
@@ -572,7 +586,77 @@
             // 
             this.fileSystemFileWrapperBindingSource.DataSource = typeof(FileSystemImage.DataModels.FileSystemFileWrapper);
             // 
-            // frmMain
+            // contextMenuStripFolder
+            // 
+            this.contextMenuStripFolder.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsMenuItemUpdateFolderRecursive,
+            this.tsMenuItemUpdateFolder,
+            this.toolStripSeparator2,
+            this.tsMenuItemShowInExplorer,
+            this.tsMenuItemFolderProperties,
+            this.tsMenuItemCopyPath,
+            this.toolStripSeparator3,
+            this.tsMenuItemDeleteFolder});
+            this.contextMenuStripFolder.Name = "contextMenuStripFolder";
+            this.contextMenuStripFolder.Size = new System.Drawing.Size(203, 170);
+            // 
+            // tsMenuItemUpdateFolder
+            // 
+            this.tsMenuItemUpdateFolder.Name = "tsMenuItemUpdateFolder";
+            this.tsMenuItemUpdateFolder.Size = new System.Drawing.Size(202, 22);
+            this.tsMenuItemUpdateFolder.Text = "Rescan Content";
+            this.tsMenuItemUpdateFolder.Click += new System.EventHandler(this.TsMenuItemUpdateFolder_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
+            // 
+            // tsMenuItemUpdateFolderRecursive
+            // 
+            this.tsMenuItemUpdateFolderRecursive.Name = "tsMenuItemUpdateFolderRecursive";
+            this.tsMenuItemUpdateFolderRecursive.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.tsMenuItemUpdateFolderRecursive.Size = new System.Drawing.Size(202, 22);
+            this.tsMenuItemUpdateFolderRecursive.Text = "Rescan";
+            this.tsMenuItemUpdateFolderRecursive.Click += new System.EventHandler(this.TsMenuItemUpdateFolderRecursive_Click);
+            // 
+            // tsMenuItemShowInExplorer
+            // 
+            this.tsMenuItemShowInExplorer.Name = "tsMenuItemShowInExplorer";
+            this.tsMenuItemShowInExplorer.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.tsMenuItemShowInExplorer.Size = new System.Drawing.Size(202, 22);
+            this.tsMenuItemShowInExplorer.Text = "Open In Explorer";
+            this.tsMenuItemShowInExplorer.Click += new System.EventHandler(this.TsMenuItemShowInExplorer_Click);
+            // 
+            // tsMenuItemFolderProperties
+            // 
+            this.tsMenuItemFolderProperties.Name = "tsMenuItemFolderProperties";
+            this.tsMenuItemFolderProperties.Size = new System.Drawing.Size(202, 22);
+            this.tsMenuItemFolderProperties.Text = "Show Properties";
+            this.tsMenuItemFolderProperties.Click += new System.EventHandler(this.TsMenuItemFolderProperties_Click);
+            // 
+            // tsMenuItemCopyPath
+            // 
+            this.tsMenuItemCopyPath.Name = "tsMenuItemCopyPath";
+            this.tsMenuItemCopyPath.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.tsMenuItemCopyPath.Size = new System.Drawing.Size(202, 22);
+            this.tsMenuItemCopyPath.Text = "CopyPath";
+            this.tsMenuItemCopyPath.Click += new System.EventHandler(this.TsMenuItemCopyPath_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(199, 6);
+            // 
+            // tsMenuItemDeleteFolder
+            // 
+            this.tsMenuItemDeleteFolder.Name = "tsMenuItemDeleteFolder";
+            this.tsMenuItemDeleteFolder.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.tsMenuItemDeleteFolder.Size = new System.Drawing.Size(202, 22);
+            this.tsMenuItemDeleteFolder.Text = "Delete...";
+            this.tsMenuItemDeleteFolder.Click += new System.EventHandler(this.TsMenuItemDeleteFolder_Click);
+            // 
+            // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -599,6 +683,7 @@
             this.statusStrip1.PerformLayout();
             this.contextMenuStripFile.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemFileWrapperBindingSource)).EndInit();
+            this.contextMenuStripFolder.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -657,7 +742,15 @@
         private System.Windows.Forms.ToolStripStatusLabel ChecksumFileGenerationLabel;
         private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-     
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripFolder;
+        private System.Windows.Forms.ToolStripMenuItem tsMenuItemUpdateFolderRecursive;
+        private System.Windows.Forms.ToolStripMenuItem tsMenuItemUpdateFolder;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem tsMenuItemShowInExplorer;
+        private System.Windows.Forms.ToolStripMenuItem tsMenuItemFolderProperties;
+        private System.Windows.Forms.ToolStripMenuItem tsMenuItemCopyPath;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem tsMenuItemDeleteFolder;
     }
 }
 

@@ -90,11 +90,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>FileSystemImage.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>EC190E9F8470CCC2FF252F9724DE2EB9FDA35C86</ManifestCertificateThumbprint>
@@ -172,6 +171,12 @@
     <Compile Include="InputForms\FormSetPassword.Designer.cs">
       <DependentUpon>FormSetPassword.cs</DependentUpon>
     </Compile>
+    <Compile Include="InputForms\RescanSubfolderOverlayControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InputForms\RescanSubfolderOverlayControl.Designer.cs">
+      <DependentUpon>RescanSubfolderOverlayControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils\AsyncThreadExecution.cs" />
     <Compile Include="FileSystem\FileSystemObject.cs" />
     <Compile Include="FileTree\FileSystemTree.cs" />
@@ -207,6 +212,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileTree\TreeSearch.cs" />
     <Compile Include="Utils\Delegates\AsyncDelegates.cs" />
+    <Compile Include="Utils\FileSystemHelper.cs" />
     <Compile Include="Utils\MemoryHandler.cs" />
     <Compile Include="Utils\WildcardRegExpConverter.cs" />
     <EmbeddedResource Include="FormAboutBox.resx">
@@ -230,6 +236,9 @@
     <EmbeddedResource Include="InputForms\FormSetPassword.resx">
       <DependentUpon>FormSetPassword.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="InputForms\RescanSubfolderOverlayControl.resx">
+      <DependentUpon>RescanSubfolderOverlayControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -241,6 +250,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
+    <None Include="FileSystemImage.pfx" />
     <None Include="GeneralToolkit.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest">

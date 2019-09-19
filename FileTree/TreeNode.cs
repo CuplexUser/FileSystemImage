@@ -8,35 +8,23 @@ namespace FileSystemImage.FileTree
     {
         #region Properties
 
-        private readonly long key;
-        private readonly string name;
-        private readonly long parent;
         private List<long> _children;
 
-        public string Name
-        {
-            get { return this.name; }
-        }
+        public string Name { get; }
 
-        public long Parent
-        {
-            get { return this.parent; }
-        }
+        public long Parent { get; }
 
         public List<long> Children
         {
             get
             {
-                if(this._children == null)
-                    this.PopulateChildNodes();
-                return this._children;
+                if (_children == null)
+                    PopulateChildNodes();
+                return _children;
             }
         }
 
-        public long Key
-        {
-            get { return this.key; }
-        }
+        public long Key { get; }
 
         public bool IsFile { get; private set; }
 
@@ -52,39 +40,20 @@ namespace FileSystemImage.FileTree
 
         public TreeNode(bool isFile, string name, long key, long parent)
         {
-            this.IsFile = isFile;
-            this.name = name;
-            this.key = key;
-            this.parent = parent;
+            IsFile = isFile;
+            Name = name;
+            Key = key;
+            Parent = parent;
         }
 
         public void AddChild(TreeNode n, FileAllocationTable fat)
         {
             long treeNode = fat.AddTreeNode(n);
-
-            //n.key = key;
-            //n.parent = this.key;
-
-            //if (this.next == 0)
-            //{
-            //    this.next = n.key;
-            //    n.previous = this.key;
-            //}
-            //else
-            //{
-            //    TreeNode nextNode = fat.FileRecords[this.next] as TreeNode;
-
-            //    this.next = n.key;
-            //    n.previous = this.key;
-
-            //    n.next = nextNode.key;
-            //    nextNode.previous = n.key;
-            //}
         }
 
         private void PopulateChildNodes()
         {
-            this._children = new List<long>();
+            _children = new List<long>();
         }
     }
 }

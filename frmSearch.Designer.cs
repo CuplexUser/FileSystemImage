@@ -35,11 +35,11 @@
             this.lstResults = new System.Windows.Forms.ListBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.grpSearch = new System.Windows.Forms.GroupBox();
+            this.chkFoldersIncluded = new System.Windows.Forms.CheckBox();
             this.chkIgnoreCase = new System.Windows.Forms.CheckBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSearchResCount = new System.Windows.Forms.ToolStripStatusLabel();
-            this.chkFoldersIncluded = new System.Windows.Forms.CheckBox();
             this.grpSearch.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -47,7 +47,7 @@
             // btnSearch
             // 
             this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearch.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSearch.Location = new System.Drawing.Point(385, 29);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(80, 25);
@@ -115,6 +115,18 @@
             this.grpSearch.TabStop = false;
             this.grpSearch.Text = "Search parameters";
             // 
+            // chkFoldersIncluded
+            // 
+            this.chkFoldersIncluded.AutoSize = true;
+            this.chkFoldersIncluded.Checked = true;
+            this.chkFoldersIncluded.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkFoldersIncluded.Location = new System.Drawing.Point(9, 17);
+            this.chkFoldersIncluded.Name = "chkFoldersIncluded";
+            this.chkFoldersIncluded.Size = new System.Drawing.Size(176, 17);
+            this.chkFoldersIncluded.TabIndex = 4;
+            this.chkFoldersIncluded.Text = "Include matches by foldername ";
+            this.chkFoldersIncluded.UseVisualStyleBackColor = true;
+            // 
             // chkIgnoreCase
             // 
             this.chkIgnoreCase.AutoSize = true;
@@ -149,18 +161,6 @@
             this.toolStripSearchResCount.Name = "toolStripSearchResCount";
             this.toolStripSearchResCount.Size = new System.Drawing.Size(13, 17);
             this.toolStripSearchResCount.Text = "0";
-            // 
-            // chkFoldersIncluded
-            // 
-            this.chkFoldersIncluded.AutoSize = true;
-            this.chkFoldersIncluded.Checked = true;
-            this.chkFoldersIncluded.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkFoldersIncluded.Location = new System.Drawing.Point(9, 17);
-            this.chkFoldersIncluded.Name = "chkFoldersIncluded";
-            this.chkFoldersIncluded.Size = new System.Drawing.Size(176, 17);
-            this.chkFoldersIncluded.TabIndex = 4;
-            this.chkFoldersIncluded.Text = "Include matches by foldername ";
-            this.chkFoldersIncluded.UseVisualStyleBackColor = true;
             // 
             // FrmSearch
             // 

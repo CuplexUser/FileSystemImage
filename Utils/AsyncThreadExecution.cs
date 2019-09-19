@@ -10,21 +10,19 @@ namespace FileSystemImage.Utils
 
         public AsyncThreadExecution(AsyncThreadExecutionMethod asyncThreadExecutionMethod)
         {
-            this._asyncThreadExecutionMethod = asyncThreadExecutionMethod;
-            this._workerThread = new Thread(this.ThMain);
+            _asyncThreadExecutionMethod = asyncThreadExecutionMethod;
+            _workerThread = new Thread(ThMain);
         }
 
         public void Start()
         {
-            if(this._workerThread != null)
-                this._workerThread.Start();
+            _workerThread?.Start();
         }
 
         private void ThMain()
         {
-            if(this._asyncThreadExecutionMethod != null)
-                this._asyncThreadExecutionMethod.Invoke();
-            this._workerThread = null;
+            _asyncThreadExecutionMethod?.Invoke();
+            _workerThread = null;
         }
     }
 }

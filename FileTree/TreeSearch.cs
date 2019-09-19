@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using FileSystemImage.FileSystem;
 using FileSystemImage.Utils;
-using System.Data.Linq;
 
 namespace FileSystemImage.FileTree
 {
@@ -108,9 +106,9 @@ namespace FileSystemImage.FileTree
 
             if (rootDirectory.DirectoryList != null)
             {
-                foreach (FileSystemDirectory fsd in rootDirectory.DirectoryList)
+                foreach (var fsd in rootDirectory.DirectoryList)
                 {
-                    if (includeFolderNames &&  depth>=_folderSequenceArray.Length) 
+                    if (includeFolderNames && depth >= _folderSequenceArray.Length)
                     {
                         //searchRes.Add(new TreeSearchResult());
                     }
@@ -148,18 +146,16 @@ namespace FileSystemImage.FileTree
     {
         public TreeSearchResult(FileSystemFile fileSystemFile, string path)
         {
-            file = fileSystemFile;
-            this.Path = path;
+            File = fileSystemFile;
+            Path = path;
         }
 
-        public FileSystemFile file { get; }
+        public FileSystemFile File { get; }
         public string Path { get; }
 
         public override string ToString()
         {
-            return Path + "\\" + file.Name;
+            return Path + "\\" + File.Name;
         }
     }
-
-
 }
