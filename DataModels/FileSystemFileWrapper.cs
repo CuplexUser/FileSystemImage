@@ -21,7 +21,7 @@ namespace FileSystemImage.DataModels
 
         public string FilePath => _fileSystemFile.FullName;
 
-        public string FileSize => GeneralConverters.FileSizeToStringFormater.ConvertFileSizeToString(_fileSystemFile.FileSize, 2);
+        public string FileSize => GeneralConverters.FormatFileSizeToString(_fileSystemFile.FileSize, 2);
 
         public string Attributes => GeneralConverters.FileAttributesToString(_fileSystemFile.FileAttributes);
 

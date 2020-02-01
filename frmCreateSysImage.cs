@@ -41,10 +41,7 @@ namespace FileSystemImage
             {
                 try
                 {
-                    drpDrive.Items.Add(new ListItem(GetDriveInfoListItemText(di), di.Name));
-                    //this.drpDrive.Items.Add(string.IsNullOrEmpty(di.VolumeLabel)
-                    //    ? new ListItem(di.Name + " ( " + GeneralConverters.FormatFileSizeToString(di.TotalSize) + " )", di.Name)
-                    //    : new ListItem(di.Name + " [" + di.VolumeLabel + "]" + " ( " + GeneralConverters.FormatFileSizeToString(di.TotalSize) + " )", di.Name));
+                    drpDrive.Items.Add(new ListItem(GetDriveInfoListItemText(di), di.Name));                    
                 }
                 catch(IOException ioException)
                 {

@@ -14,17 +14,17 @@ namespace FileSystemImage.Configuration
             var logLevel = !ApplicationBuildConfig.DebugMode ? LogEventLevel.Warning : LogEventLevel.Verbose;
 
             Log.Logger = new LoggerConfiguration()
-                         .WriteTo.LiterateConsole(LogEventLevel.Debug, standardErrorFromLevel: LogEventLevel.Error, formatProvider: CultureInfo.InvariantCulture)
-                         .WriteTo.RollingFile(ApplicationBuildConfig.ApplicationLogFilePath(true),
-                             fileSizeLimitBytes: 1048576,
-                             retainedFileCountLimit: 31,
-                             restrictedToMinimumLevel: logLevel,
-                             buffered: false,
-                             outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.ff} [{Level}] {Message}{NewLine}{Exception}{Data}")
-                         .Enrich.FromLogContext()
-                         .Enrich.WithProperty("Version", Assembly.GetCallingAssembly().GetName().Version.ToString(4))
-                         .MinimumLevel.Is(logLevel)
-                         .CreateLogger();
+                .WriteTo.LiterateConsole(LogEventLevel.Debug, standardErrorFromLevel: LogEventLevel.Error, formatProvider: CultureInfo.InvariantCulture)
+                .WriteTo.RollingFile(ApplicationBuildConfig.ApplicationLogFilePath(true),
+                    fileSizeLimitBytes: 1048576,
+                    retainedFileCountLimit: 31,
+                    restrictedToMinimumLevel: logLevel,
+                    buffered: false,
+                    outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.ff} [{Level}] {Message}{NewLine}{Exception}{Data}")
+                .Enrich.FromLogContext()
+                .Enrich.WithProperty("Version", Assembly.GetCallingAssembly().GetName().Version.ToString(4))
+                .MinimumLevel.Is(logLevel)
+                .CreateLogger();
 
         }
     }

@@ -38,6 +38,7 @@ namespace FileSystemImage
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            this.Text = AppConfigHelper.GetProductAndVersionString();
             DirectoryInfoDataLabel.Text = "";
             LoadAndSaveProgressInfoLabel.Text = "";
             LoadAndSaveProgressBar.Visible = false;
@@ -386,7 +387,7 @@ namespace FileSystemImage
 
         private string GetFileSystemDirectoryData(FileSystemDirectory dir)
         {
-            return "Sub Directories: " + dir.SubDirectoriesTotal + " | Files: " + dir.FilesTotal + " | Total file size: " + GeneralConverters.FileSizeToStringFormater.ConvertFileSizeToString(dir.FileSizeTotal, 2);
+            return "Sub Directories: " + dir.SubDirectoriesTotal + " | Files: " + dir.FilesTotal + " | Total file size: " + GeneralConverters.FormatFileSizeToString(dir.FileSizeTotal, 2);
         }
 
         private string GetRootDirectoryData(FileSystemDrive fileSystemDrive)
@@ -402,7 +403,7 @@ namespace FileSystemImage
                 fileSizeTotal += fileSystemDirectory.FileSizeTotal;
             }
 
-            return "Directories: " + directories + " | Files: " + files + " | Total file size: " + GeneralConverters.FileSizeToStringFormater.ConvertFileSizeToString(fileSizeTotal, 2);
+            return "Directories: " + directories + " | Files: " + files + " | Total file size: " + GeneralConverters.FormatFileSizeToString(fileSizeTotal, 2);
         }
 
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -758,7 +759,14 @@ namespace FileSystemImage
 
         private void TsMenuItemFolderProperties_Click(object sender, EventArgs e)
         {
+            var selectedItem = FolderTreeView.SelectedNode;
+            if (selectedItem != null)
+            {
+                FormFolderProperties folderProperties = new FormFolderProperties();
+                folderProperties.TreeNodeInit(selectedItem);
 
+                folderProperties.ShowDialog(this);
+            }
         }
 
         private void TsMenuItemCopyPath_Click(object sender, EventArgs e)
