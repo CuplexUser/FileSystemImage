@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 
 namespace FileSystemImage.Utils
 {
@@ -11,8 +6,9 @@ namespace FileSystemImage.Utils
     {
         public static string GetProductAndVersionString()
         {
-            var appInfo = Assembly.GetExecutingAssembly().GetName();
-            return string.Concat(appInfo.FullName, "-", appInfo.Version.ToString(4));
+            var assemblyNameInfo = Assembly.GetCallingAssembly().GetName();
+            string version = assemblyNameInfo.Version.ToString(3);
+            return string.Concat(assemblyNameInfo.Name, " - ", version);
         }
     }
 }

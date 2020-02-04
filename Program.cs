@@ -30,7 +30,7 @@ namespace FileSystemImage
                 }
 
                 string argumentStr = sb.ToString().TrimEnd(", ".ToCharArray());
-                Log.Information("Application started with argumentStr {}", argumentStr);
+                Log.Information("Application started with argumentStr {}", 2);
                 MessageBox.Show("Application input parameters not yet implemented", "Please observe", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 

@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("Cuplex Inc")]
 [assembly: AssemblyProduct("File System Image")]
 [assembly: AssemblyCopyright("Copyright © Martin Dahl 2020")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("Cuplex/Martin Dahl")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -35,5 +35,5 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("2.0.1.0")]
-[assembly: AssemblyFileVersion("2.0.1.0")]
+[assembly: AssemblyVersion("2.2.1.1")]
+[assembly: AssemblyFileVersion("2.2.1.1")]

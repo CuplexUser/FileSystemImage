@@ -6,73 +6,80 @@ using System.Runtime.Serialization;
 namespace FileSystemImage.FileSystem
 {
     [Serializable]
-    [DataContract]
+    [DataContract(Name = "FileSystemDrive")]
     public class FileSystemDrive
     {
-        [DataMember(Order = 1)]
+        [DataMember(Name = "DriveLetter", Order = 1)]
         public string DriveLetter { get; set; }
-        [DataMember(Order = 2)]
+        [DataMember(Name = "VolumeLabel", Order = 2)]
         public string VolumeLabel { get; set; }
-        [DataMember(Order = 3)]
+        [DataMember(Name = "RootFileList", Order = 3)]
         public List<FileSystemFile> RootFileList { get; set; }
-        [DataMember(Order = 4)]
+        [DataMember(Name = "DirectoryList", Order = 4)]
         public List<FileSystemDirectory> DirectoryList { get; set; }
-        [DataMember(Order = 5)]
+        [DataMember(Name = "TotalSpace", Order = 5)]
         public Int64 TotalSpace { get; set; }
-        [DataMember(Order = 6)]
+        [DataMember(Name = "FreeSpace", Order = 6)]
         public Int64 FreeSpace { get; set; }
-        [DataMember(Order = 7)]
+        [DataMember(Name = "DriveType", Order = 7)]
         public DriveType DriveType { get; set; }
     }
 
     [Serializable]
-    [DataContract]
-    public class FileSystemDirectory 
+    [DataContract(Name = "FileSystemDirectory")]
+    public class FileSystemDirectory
     {
-        [DataMember(Order = 1)]
+        [DataMember(Name = "SubDirAccessDenied", Order = 1)]
         public bool SubDirAccessDenied { get; set; }
-        [DataMember(Order = 2)]
+        [DataMember(Name = "DirectoryList", Order = 2)]
         public List<FileSystemDirectory> DirectoryList { get; set; }
-        [DataMember(Order = 3)]
+        [DataMember(Name = "FileList", Order = 3)]
         public List<FileSystemFile> FileList { get; set; }
-        [DataMember(Order = 4)]
+        [DataMember(Name = "Name", Order = 4)]
         public string Name { get; set; }
-        [DataMember(Order = 5)]
+        [DataMember(Name = "CreateDate", Order = 5)]
         public DateTime CreateDate { get; set; }
-        [DataMember(Order = 6)]
+        [DataMember(Name = "ModifiedDate", Order = 6)]
         public DateTime ModifiedDate { get; set; }
-        [DataMember(Order = 7)]
+        [DataMember(Name = "FileSizeTotal", Order = 7)]
         public Int64 FileSizeTotal { get; set; }
-        [DataMember(Order = 8)]
+        [DataMember(Name = "FilesTotal", Order = 8)]
         public Int64 FilesTotal { get; set; }
-        [DataMember(Order = 9)]
+        [DataMember(Name = "SubDirectoriesTotal", Order = 9)]
         public Int64 SubDirectoriesTotal { get; set; }
     }
 
     [Serializable]
-    [DataContract]
-    public class FileSystemFile  
+    [DataContract(Name = "FileSystemFile")]
+    public class FileSystemFile
     {
-        [DataMember(Order = 1)]
+        [DataMember(Name = "FileSize", Order = 1)]
         public Int64 FileSize { get; set; }
-        [DataMember(Order = 2)]
+        [DataMember(Name = "FileAttributes", Order = 2)]
         public FileAttributes FileAttributes { get; set; }
-        [DataMember(Order = 3)]
+        [DataMember(Name = "Name", Order = 3)]
         public string Name { get; set; }
-        [DataMember(Order = 4)]
+        [DataMember(Name = "FullName", Order = 4)]
         public string FullName { get; set; }
-        [DataMember(Order = 5)]
+        [DataMember(Name = "CreateDate", Order = 5)]
         public DateTime CreateDate { get; set; }
-        [DataMember(Order = 6)]
+        [DataMember(Name = "ModifiedDate", Order = 6)]
         public DateTime ModifiedDate { get; set; }
-        [DataMember(Order = 7)]
+        [DataMember(Name = "LastAccessDate", Order = 7)]
         public DateTime LastAccessDate { get; set; }
     }
 
+    [Serializable]
+    [DataContract]
     public struct FileTreeSummaryInfo
     {
+        [DataMember(Name = "FileSizeTotal", Order = 1)]
         public long FileSizeTotal;
+
+        [DataMember(Name = "FilesTotal", Order = 2)]
         public long FilesTotal;
+
+        [DataMember(Name = "SubDirectoriesTotal", Order = 3)]
         public long SubDirectoriesTotal;
 
     }
