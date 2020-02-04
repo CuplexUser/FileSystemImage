@@ -246,7 +246,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="FileSystemImage.pfx" />
-    <None Include="FileSystemImage_TemporaryKey.pfx" />
     <None Include="GeneralToolkit.pfx" />
     <None Include="Properties\app.manifest">
       <SubType>Designer</SubType>
