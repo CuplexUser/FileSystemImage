@@ -2,10 +2,12 @@
 using System.Text;
 using System.Windows.Forms;
 using FileSystemImage.Configuration;
+using JetBrains.Annotations;
 using Serilog;
 
 namespace FileSystemImage
 {
+    [UsedImplicitly]
     internal class Program
     {
         /// <summary>

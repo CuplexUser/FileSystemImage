@@ -49,11 +49,9 @@
             treeNode1,
             treeNode5,
             treeNode9});
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.imgIconImgList = new System.Windows.Forms.ImageList(this.components);
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,7 +79,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.FolderTreeView = new System.Windows.Forms.TreeView();
             this.FileListDataGridView = new System.Windows.Forms.DataGridView();
-            this.Attributes = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fileSystemFileWrapperBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.LoadAndSaveProgressInfoLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.DirectoryInfoDataLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -100,20 +98,22 @@
             this.createMD5FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fileSizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.modifiedDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.createDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fileSystemFileWrapperBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.contextMenuStripFolder = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsMenuItemUpdateFolderRecursive = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenuItemUpdateFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsMenuItemUpdateFolderRecursive = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenuItemShowInExplorer = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenuItemFolderProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenuItemCopyPath = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsMenuItemDeleteFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.fileSystemFileWrapperBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.filePathDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.attributesDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MainMenu.SuspendLayout();
             this.MainContentPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -121,10 +121,11 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FileListDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemFileWrapperBindingSource)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.contextMenuStripFile.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemFileWrapperBindingSource)).BeginInit();
             this.contextMenuStripFolder.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemFileWrapperBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // imgIconImgList
@@ -143,7 +144,7 @@
             this.helpToolStripMenuItem});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
-            this.MainMenu.Size = new System.Drawing.Size(809, 24);
+            this.MainMenu.Size = new System.Drawing.Size(834, 24);
             this.MainMenu.TabIndex = 1;
             // 
             // fileToolStripMenuItem
@@ -308,7 +309,7 @@
             this.MainContentPanel.Location = new System.Drawing.Point(0, 27);
             this.MainContentPanel.Margin = new System.Windows.Forms.Padding(0);
             this.MainContentPanel.Name = "MainContentPanel";
-            this.MainContentPanel.Size = new System.Drawing.Size(809, 431);
+            this.MainContentPanel.Size = new System.Drawing.Size(834, 431);
             this.MainContentPanel.TabIndex = 5;
             // 
             // splitContainer1
@@ -324,8 +325,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.FileListDataGridView);
-            this.splitContainer1.Size = new System.Drawing.Size(809, 431);
-            this.splitContainer1.SplitterDistance = 268;
+            this.splitContainer1.Size = new System.Drawing.Size(834, 431);
+            this.splitContainer1.SplitterDistance = 250;
             this.splitContainer1.SplitterWidth = 8;
             this.splitContainer1.TabIndex = 4;
             // 
@@ -362,7 +363,7 @@
             this.FolderTreeView.SelectedImageIndex = 0;
             this.FolderTreeView.ShowLines = false;
             this.FolderTreeView.ShowRootLines = false;
-            this.FolderTreeView.Size = new System.Drawing.Size(268, 431);
+            this.FolderTreeView.Size = new System.Drawing.Size(250, 431);
             this.FolderTreeView.TabIndex = 0;
             this.FolderTreeView.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.FolderTreeView_BeforeExpand);
             this.FolderTreeView.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.FolderTreeView_AfterExpand);
@@ -372,6 +373,7 @@
             // FileListDataGridView
             // 
             this.FileListDataGridView.AllowUserToAddRows = false;
+            this.FileListDataGridView.AllowUserToDeleteRows = false;
             this.FileListDataGridView.AllowUserToResizeRows = false;
             this.FileListDataGridView.AutoGenerateColumns = false;
             this.FileListDataGridView.BackgroundColor = System.Drawing.Color.White;
@@ -379,12 +381,13 @@
             this.FileListDataGridView.ColumnHeadersHeight = 25;
             this.FileListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.FileListDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nameDataGridViewTextBoxColumn,
-            this.fileSizeDataGridViewTextBoxColumn,
-            this.modifiedDateDataGridViewTextBoxColumn,
-            this.createDateDataGridViewTextBoxColumn,
-            this.Attributes});
-            this.FileListDataGridView.DataSource = this.fileSystemFileWrapperBindingSource;
+            this.dataGridViewTextBoxColumn1,
+            this.filePathDataGridViewTextBoxColumn,
+            this.dataGridViewTextBoxColumn2,
+            this.attributesDataGridViewTextBoxColumn,
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4});
+            this.FileListDataGridView.DataSource = this.fileSystemFileWrapperBindingSource1;
             this.FileListDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FileListDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.FileListDataGridView.Location = new System.Drawing.Point(0, 0);
@@ -395,21 +398,9 @@
             this.FileListDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.FileListDataGridView.RowTemplate.Height = 15;
             this.FileListDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.FileListDataGridView.Size = new System.Drawing.Size(533, 431);
+            this.FileListDataGridView.Size = new System.Drawing.Size(576, 431);
             this.FileListDataGridView.TabIndex = 0;
             this.FileListDataGridView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FileListDataGridView_MouseUp);
-            // 
-            // Attributes
-            // 
-            this.Attributes.DataPropertyName = "Attributes";
-            dataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle31.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.Attributes.DefaultCellStyle = dataGridViewCellStyle31;
-            this.Attributes.HeaderText = "Attributes";
-            this.Attributes.MinimumWidth = 60;
-            this.Attributes.Name = "Attributes";
-            this.Attributes.ReadOnly = true;
-            this.Attributes.Width = 60;
             // 
             // statusStrip1
             // 
@@ -421,7 +412,7 @@
             this.ChecksumFileGenerationLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 461);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(809, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(834, 22);
             this.statusStrip1.TabIndex = 6;
             // 
             // LoadAndSaveProgressInfoLabel
@@ -537,55 +528,6 @@
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            dataGridViewCellStyle32.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.nameDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle32;
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn.MinimumWidth = 75;
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // fileSizeDataGridViewTextBoxColumn
-            // 
-            this.fileSizeDataGridViewTextBoxColumn.DataPropertyName = "FileSize";
-            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle33.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.fileSizeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle33;
-            this.fileSizeDataGridViewTextBoxColumn.HeaderText = "FileSize";
-            this.fileSizeDataGridViewTextBoxColumn.MinimumWidth = 60;
-            this.fileSizeDataGridViewTextBoxColumn.Name = "fileSizeDataGridViewTextBoxColumn";
-            this.fileSizeDataGridViewTextBoxColumn.ReadOnly = true;
-            this.fileSizeDataGridViewTextBoxColumn.Width = 68;
-            // 
-            // modifiedDateDataGridViewTextBoxColumn
-            // 
-            this.modifiedDateDataGridViewTextBoxColumn.DataPropertyName = "ModifiedDate";
-            dataGridViewCellStyle34.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.modifiedDateDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle34;
-            this.modifiedDateDataGridViewTextBoxColumn.HeaderText = "Modified";
-            this.modifiedDateDataGridViewTextBoxColumn.MinimumWidth = 70;
-            this.modifiedDateDataGridViewTextBoxColumn.Name = "modifiedDateDataGridViewTextBoxColumn";
-            this.modifiedDateDataGridViewTextBoxColumn.ReadOnly = true;
-            this.modifiedDateDataGridViewTextBoxColumn.Width = 70;
-            // 
-            // createDateDataGridViewTextBoxColumn
-            // 
-            this.createDateDataGridViewTextBoxColumn.DataPropertyName = "CreateDate";
-            dataGridViewCellStyle35.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.createDateDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle35;
-            this.createDateDataGridViewTextBoxColumn.HeaderText = "Created";
-            this.createDateDataGridViewTextBoxColumn.MinimumWidth = 70;
-            this.createDateDataGridViewTextBoxColumn.Name = "createDateDataGridViewTextBoxColumn";
-            this.createDateDataGridViewTextBoxColumn.ReadOnly = true;
-            this.createDateDataGridViewTextBoxColumn.Width = 70;
-            // 
-            // fileSystemFileWrapperBindingSource
-            // 
-            this.fileSystemFileWrapperBindingSource.DataSource = typeof(FileSystemImage.DataModels.FileSystemFileWrapper);
-            // 
             // contextMenuStripFolder
             // 
             this.contextMenuStripFolder.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -598,7 +540,15 @@
             this.toolStripSeparator3,
             this.tsMenuItemDeleteFolder});
             this.contextMenuStripFolder.Name = "contextMenuStripFolder";
-            this.contextMenuStripFolder.Size = new System.Drawing.Size(203, 170);
+            this.contextMenuStripFolder.Size = new System.Drawing.Size(203, 148);
+            // 
+            // tsMenuItemUpdateFolderRecursive
+            // 
+            this.tsMenuItemUpdateFolderRecursive.Name = "tsMenuItemUpdateFolderRecursive";
+            this.tsMenuItemUpdateFolderRecursive.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.tsMenuItemUpdateFolderRecursive.Size = new System.Drawing.Size(202, 22);
+            this.tsMenuItemUpdateFolderRecursive.Text = "Rescan";
+            this.tsMenuItemUpdateFolderRecursive.Click += new System.EventHandler(this.TsMenuItemUpdateFolderRecursive_Click);
             // 
             // tsMenuItemUpdateFolder
             // 
@@ -611,14 +561,6 @@
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
-            // 
-            // tsMenuItemUpdateFolderRecursive
-            // 
-            this.tsMenuItemUpdateFolderRecursive.Name = "tsMenuItemUpdateFolderRecursive";
-            this.tsMenuItemUpdateFolderRecursive.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.tsMenuItemUpdateFolderRecursive.Size = new System.Drawing.Size(202, 22);
-            this.tsMenuItemUpdateFolderRecursive.Text = "Rescan";
-            this.tsMenuItemUpdateFolderRecursive.Click += new System.EventHandler(this.TsMenuItemUpdateFolderRecursive_Click);
             // 
             // tsMenuItemShowInExplorer
             // 
@@ -656,11 +598,80 @@
             this.tsMenuItemDeleteFolder.Text = "Delete...";
             this.tsMenuItemDeleteFolder.Click += new System.EventHandler(this.TsMenuItemDeleteFolder_Click);
             // 
+            // fileSystemFileWrapperBindingSource1
+            // 
+            this.fileSystemFileWrapperBindingSource1.DataSource = typeof(FileSystemImage.DataModels.FileSystemFileWrapper);
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "Name";
+            this.dataGridViewTextBoxColumn1.FillWeight = 75F;
+            this.dataGridViewTextBoxColumn1.HeaderText = "Name";
+            this.dataGridViewTextBoxColumn1.MinimumWidth = 75;
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // filePathDataGridViewTextBoxColumn
+            // 
+            this.filePathDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.filePathDataGridViewTextBoxColumn.DataPropertyName = "FilePath";
+            this.filePathDataGridViewTextBoxColumn.HeaderText = "FilePath";
+            this.filePathDataGridViewTextBoxColumn.MinimumWidth = 75;
+            this.filePathDataGridViewTextBoxColumn.Name = "filePathDataGridViewTextBoxColumn";
+            this.filePathDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "FileSize";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridViewTextBoxColumn2.FillWeight = 25F;
+            this.dataGridViewTextBoxColumn2.HeaderText = "FileSize";
+            this.dataGridViewTextBoxColumn2.MinimumWidth = 55;
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // attributesDataGridViewTextBoxColumn
+            // 
+            this.attributesDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.attributesDataGridViewTextBoxColumn.DataPropertyName = "Attributes";
+            this.attributesDataGridViewTextBoxColumn.FillWeight = 25F;
+            this.attributesDataGridViewTextBoxColumn.HeaderText = "Attributes";
+            this.attributesDataGridViewTextBoxColumn.MinimumWidth = 50;
+            this.attributesDataGridViewTextBoxColumn.Name = "attributesDataGridViewTextBoxColumn";
+            this.attributesDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "CreateDate";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridViewTextBoxColumn3.FillWeight = 25F;
+            this.dataGridViewTextBoxColumn3.HeaderText = "CreateDate";
+            this.dataGridViewTextBoxColumn3.MinimumWidth = 70;
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn4.DataPropertyName = "ModifiedDate";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridViewTextBoxColumn4.FillWeight = 25F;
+            this.dataGridViewTextBoxColumn4.HeaderText = "ModifiedDate";
+            this.dataGridViewTextBoxColumn4.MinimumWidth = 70;
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(809, 483);
+            this.ClientSize = new System.Drawing.Size(834, 483);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.MainMenu);
             this.Controls.Add(this.MainContentPanel);
@@ -679,11 +690,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.FileListDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemFileWrapperBindingSource)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.contextMenuStripFile.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemFileWrapperBindingSource)).EndInit();
             this.contextMenuStripFolder.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.fileSystemFileWrapperBindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -719,7 +731,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn fileSizeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn modifiedDateDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn createDateDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Attributes;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel DirectoryInfoDataLabel;
         private System.Windows.Forms.ToolStripStatusLabel LoadAndSaveProgressInfoLabel;
@@ -751,6 +762,13 @@
         private System.Windows.Forms.ToolStripMenuItem tsMenuItemCopyPath;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem tsMenuItemDeleteFolder;
+        private System.Windows.Forms.BindingSource fileSystemFileWrapperBindingSource1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn filePathDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn attributesDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
     }
 }
 

@@ -97,7 +97,7 @@
     <AssemblyOriginatorKeyFile>FileSystemImage.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>D9BE8068AB9ADBA4B4C8B644C50B9A7383B21540</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>5B6AF55DA613A2D1E5C44F712094D554EC853A55</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>
@@ -138,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\LogConfiguration.cs" />
+    <Compile Include="DataModels\FileSystemDriveInfo.cs" />
     <Compile Include="FormAboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -246,12 +247,13 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="FileSystemImage.pfx" />
+    <None Include="FileSystemImage_TemporaryKey.pfx" />
     <None Include="GeneralToolkit.pfx" />
     <None Include="Properties\app.manifest">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\DataSources\FileSystemImage.DataModels.FileSystemDriveInfo.datasource" />
     <None Include="Properties\DataSources\FileSystemImage.DataModels.FileSystemFileWrapper.datasource" />
-    <None Include="Properties\DataSources\FileSystemImage.FileSystem.FileSystemFile.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -308,6 +310,7 @@
       <Version>3.3.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

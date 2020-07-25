@@ -25,8 +25,8 @@ namespace FileSystemImage.DataModels
 
         public string Attributes => GeneralConverters.FileAttributesToString(_fileSystemFile.FileAttributes);
 
-        public string CreateDate => _fileSystemFile.CreateDate.ToString("yyyy-mm-dd");
+        public string CreateDate => _fileSystemFile.CreateDate.ToString("yyyy-MM-dd");
 
-        public string ModifiedDate => _fileSystemFile.ModifiedDate.ToString("yyyy-mm-dd");
+        public string ModifiedDate => _fileSystemFile.ModifiedDate.ToString("yyyy-MM-dd");
     }
 }

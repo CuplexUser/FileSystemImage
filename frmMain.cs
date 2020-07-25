@@ -63,7 +63,7 @@ namespace FileSystemImage
             _currentFileSystemDrive = fileSystemDrive;
             FolderTreeView.Nodes.Clear();
 
-            if (_currentFileSystemDrive != null)
+            if (FileSystemDriveIsAvailable)
             {
                 FolderTreeView.Nodes.Add(_currentFileSystemDrive.DriveLetter);
                 TreeNode root = FolderTreeView.Nodes[0];
@@ -133,7 +133,7 @@ namespace FileSystemImage
             });
         }
 
-        protected void HandleOpenFileComplete(object sender, EventArgs eventArgs)
+        private void HandleOpenFileComplete(object sender, EventArgs eventArgs)
         {
             LoadAndSaveProgressBar.Visible = false;
             LoadAndSaveProgressInfoLabel.Visible = false;
@@ -147,7 +147,7 @@ namespace FileSystemImage
             MemoryHandler.RunGarbageCollect();
         }
 
-        protected void HandleSaveFileComplete(object sender, OutcomeEventArgs eventArgs)
+        private void HandleSaveFileComplete(object sender, OutcomeEventArgs eventArgs)
         {
             LoadAndSaveProgressBar.Visible = false;
             saveAsToolStripMenuItem.Enabled = true;
@@ -221,7 +221,7 @@ namespace FileSystemImage
             {
                 string password = setPasswordDialog.VerifiedPassword;
                 SaveFileSystemImageToFile(_currentFileSystemDrive, _currentFileName, password);
-                Log.Debug("Successfuly Saved file: {FileName}", saveFileDialog.FileName);
+                Log.Debug("Successfully Saved file: {FileName}", saveFileDialog.FileName);
             }
             MemoryHandler.RunGarbageCollect();
         }
@@ -387,7 +387,7 @@ namespace FileSystemImage
 
         private string GetFileSystemDirectoryData(FileSystemDirectory dir)
         {
-            return "Sub Directories: " + dir.SubDirectoriesTotal + " | Files: " + dir.FilesTotal + " | Total file size: " + GeneralConverters.FormatFileSizeToString(dir.FileSizeTotal, 2);
+            return $"Sub Directories: {dir.SubDirectoriesTotal} | Files: {dir.FilesTotal} | Total file size: {GeneralConverters.FormatFileSizeToString(dir.FileSizeTotal, 2)}";
         }
 
         private string GetRootDirectoryData(FileSystemDrive fileSystemDrive)
@@ -403,7 +403,7 @@ namespace FileSystemImage
                 fileSizeTotal += fileSystemDirectory.FileSizeTotal;
             }
 
-            return "Directories: " + directories + " | Files: " + files + " | Total file size: " + GeneralConverters.FormatFileSizeToString(fileSizeTotal, 2);
+            return $"Directories: {directories} | Files: {files} | Total file size: {GeneralConverters.FormatFileSizeToString(fileSizeTotal, 2)}";
         }
 
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -548,7 +548,7 @@ namespace FileSystemImage
 
         private void driveInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_currentFileSystemDrive != null)
+            if (FileSystemDriveIsAvailable)
             {
                 var driveInfoForm = new frmDriveInfo();
                 driveInfoForm.SetFileSystemDrive(_currentFileSystemDrive);
@@ -558,7 +558,7 @@ namespace FileSystemImage
 
         private void searchToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_currentFileSystemDrive == null)
+            if (!FileSystemDriveIsAvailable)
             {
                 MessageBox.Show("Please load a file system image first");
                 return;
@@ -568,13 +568,22 @@ namespace FileSystemImage
             searchDialog.ShowDialog(this);
         }
 
+        private bool FileSystemDriveIsAvailable => _currentFileSystemDrive != null;
+
         private void FileListDataGridView_MouseUp(object sender, MouseEventArgs e)
         {
-            //if (FileListDataGridView.SelectedRows.Count == 0) return;
+            if (FileListDataGridView.DataSource == null)
+            {
+                return;
+            }
 
             if (e.Button == MouseButtons.Right)
             {
-                if (sender is Control control) contextMenuStripFile.Show(control, e.X, e.Y);
+                if (sender is Control control)
+                {
+                    contextMenuStripFile.Show(control, e.X, e.Y);
+                }
+
             }
         }
 

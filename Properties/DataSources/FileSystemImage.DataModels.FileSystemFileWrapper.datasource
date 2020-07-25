@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="FileSystemFileWrapper" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>FileSystemImage.DataModels.FileSystemFileWrapper, FileSystemImage, Version=1.0.1.2, Culture=neutral, PublicKeyToken=null</TypeInfo>
+   <TypeInfo>FileSystemImage.DataModels.FileSystemFileWrapper, FileSystemImage, Version=2.2.1.1, Culture=neutral, PublicKeyToken=eaf992c2958d6c46</TypeInfo>
 </GenericObjectDataSource>

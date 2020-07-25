@@ -5,6 +5,6 @@
     Renaming the file extension or editing the content of this file may   
     cause the file to be unrecognizable by the program.
 -->
-<GenericObjectDataSource DisplayName="FileSystemFile" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>FileSystemImage.FileSystem.FileSystemFile, FileSystemImage, Version=1.0.1.2, Culture=neutral, PublicKeyToken=null</TypeInfo>
+<GenericObjectDataSource DisplayName="FileSystemDriveInfo" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+   <TypeInfo>FileSystemImage.DataModels.FileSystemDriveInfo, FileSystemImage, Version=2.2.1.1, Culture=neutral, PublicKeyToken=eaf992c2958d6c46</TypeInfo>
 </GenericObjectDataSource>

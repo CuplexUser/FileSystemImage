@@ -14,6 +14,8 @@ namespace FileSystemImage
             this.InitializeComponent();
         }
 
+        //TODO replace manually adding data with a binding source from the class FileSystemDriveInfo
+
         private void frmDriveInfo_Load(object sender, EventArgs e)
         {
             if(this.currentFileSystemDrive != null)
