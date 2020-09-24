@@ -97,7 +97,7 @@
     <AssemblyOriginatorKeyFile>FileSystemImage.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>5B6AF55DA613A2D1E5C44F712094D554EC853A55</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>4D711FE25EEF45DC10FE6032C1324044BEF47950</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>
@@ -288,12 +288,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GeneralToolkitLib\GeneralToolkitLib\GeneralToolkitLib.csproj">
-      <Project>{18b7c1dc-cb9b-4b4f-b3bb-40e79b277dd9}</Project>
-      <Name>GeneralToolkitLib</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Serilog">
       <Version>2.9.0</Version>
     </PackageReference>
@@ -310,7 +304,12 @@
       <Version>3.3.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\C-Projects\GeneralToolkitLib\GeneralToolkitLib\GeneralToolkitLib.csproj">
+      <Project>{18b7c1dc-cb9b-4b4f-b3bb-40e79b277dd9}</Project>
+      <Name>GeneralToolkitLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
