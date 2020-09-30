@@ -5,8 +5,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using FileSystemImage.FileSystem;
 using FileSystemImage.FileTree;
+using FileSystemImage.DataModels;
 using Serilog;
 
 namespace FileSystemImage
@@ -14,17 +14,14 @@ namespace FileSystemImage
     public partial class FrmSearch : Form
     {
         private FileSystemDrive _fileSystemDrive;
-        private CancellationTokenSource _searchCancellation;
-        private readonly ILogger _logger;
+        private CancellationTokenSource _searchCancellation = null;
 
         private delegate void SearchCompleteEventHandler(object sender, SearchEventArgs e);
         private bool _isSearching = false;
 
-        public FrmSearch(ILogger logger)
-        {
-            _logger = logger;
-            InitializeComponent();
-            _searchCancellation = new CancellationTokenSource();
+        public FrmSearch()
+        {            
+            InitializeComponent();            
         }
 
         public void SetFileSystemDrive(FileSystemDrive fsd)
@@ -34,7 +31,8 @@ namespace FileSystemImage
 
         private void frmSearch_Load(object sender, EventArgs e)
         {
-        }
+            _searchCancellation = new CancellationTokenSource();
+        }        
 
         private void frmSearch_Resize(object sender, EventArgs e)
         {
@@ -63,6 +61,7 @@ namespace FileSystemImage
 
         private void PerformSearch()
         {
+            
             if (txtSearch.Text == "")
                 return;
 
@@ -75,7 +74,7 @@ namespace FileSystemImage
                 _searchCancellation.Token.Register(() =>
                 {
                     _isSearching = false;
-                    Invoke(new SearchCompleteEventHandler(SearchComplete), this, new SearchEventArgs(null));
+                    //Invoke(new SearchCompleteEventHandler(SearchComplete), this, new SearchEventArgs(null));
                 });
                 return;
             }
@@ -104,7 +103,7 @@ namespace FileSystemImage
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "SearchException");
+                Log.Error(ex, "SearchException");
                 MessageBox.Show(ex.Message);
             }
         }
@@ -112,7 +111,7 @@ namespace FileSystemImage
         private void SearchComplete(object sender, SearchEventArgs e)
         {
             btnSearch.Text = "Search";
-            _searchCancellation = new CancellationTokenSource();
+            
             if (e.TreeSearchResults != null)
                 PopulateSearchResult(e.TreeSearchResults);
         }

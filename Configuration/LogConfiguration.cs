@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Reflection;
+using System.Text;
 using GeneralToolkitLib.Configuration;
 using Serilog;
 using Serilog.Events;
@@ -14,13 +15,16 @@ namespace FileSystemImage.Configuration
             var logLevel = !ApplicationBuildConfig.DebugMode ? LogEventLevel.Warning : LogEventLevel.Verbose;
 
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.LiterateConsole(LogEventLevel.Debug, standardErrorFromLevel: LogEventLevel.Error, formatProvider: CultureInfo.InvariantCulture)
-                .WriteTo.RollingFile(ApplicationBuildConfig.ApplicationLogFilePath(true),
-                    fileSizeLimitBytes: 1048576,
-                    retainedFileCountLimit: 31,
+                .WriteTo.Console(LogEventLevel.Debug, standardErrorFromLevel: LogEventLevel.Error, formatProvider: CultureInfo.InvariantCulture)
+                .WriteTo.File(ApplicationBuildConfig.ApplicationLogFilePath(true),
+                    fileSizeLimitBytes: 5242880,
+                    retainedFileCountLimit: 20,
                     restrictedToMinimumLevel: logLevel,
                     buffered: false,
-                    outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.ff} [{Level}] {Message}{NewLine}{Exception}{Data}")
+                    outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.ff} [{Level}] {Message}{NewLine}{Exception}{Data}",
+                    encoding: Encoding.UTF8, formatProvider: CultureInfo.CurrentCulture,
+                    rollingInterval: RollingInterval.Day
+                    )
                 .Enrich.FromLogContext()
                 .Enrich.WithProperty("Version", Assembly.GetCallingAssembly().GetName().Version.ToString(4))
                 .MinimumLevel.Is(logLevel)

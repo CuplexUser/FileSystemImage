@@ -25,13 +25,12 @@ namespace FileSystemImage
             // Parse commands if c parameter string is not empty
             if (parameters.Length > 0)
             {
-                StringBuilder sb = new StringBuilder();
+                var sb = new StringBuilder();
                 for (int i = 0; i < parameters.Length; i++)
                 {
                     sb.Append($"{(i + 1)}: {parameters[i]}, ");
                 }
 
-                string argumentStr = sb.ToString().TrimEnd(", ".ToCharArray());
                 Log.Information("Application started with argumentStr {}", 2);
                 MessageBox.Show("Application input parameters not yet implemented", "Please observe", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

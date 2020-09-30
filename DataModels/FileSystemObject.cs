@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 
-namespace FileSystemImage.FileSystem
+namespace FileSystemImage.DataModels
 {
     [Serializable]
     [DataContract(Name = "FileSystemDrive")]

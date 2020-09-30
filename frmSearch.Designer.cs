@@ -13,10 +13,17 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && _searchCancellation != null)
             {
+                _searchCancellation.Dispose();
+                _searchCancellation = null;
+            }
+
+            if (disposing && (components != null))
+            {                   
                 components.Dispose();
             }
+            
             base.Dispose(disposing);
         }
 
@@ -48,9 +55,10 @@
             // 
             this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearch.Location = new System.Drawing.Point(385, 29);
+            this.btnSearch.Location = new System.Drawing.Point(455, 32);
+            this.btnSearch.Margin = new System.Windows.Forms.Padding(5);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(80, 25);
+            this.btnSearch.Size = new System.Drawing.Size(93, 29);
             this.btnSearch.TabIndex = 1;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
@@ -61,18 +69,19 @@
             this.chkRegexp.AutoSize = true;
             this.chkRegexp.Checked = true;
             this.chkRegexp.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkRegexp.Location = new System.Drawing.Point(206, 17);
+            this.chkRegexp.Location = new System.Drawing.Point(240, 19);
+            this.chkRegexp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.chkRegexp.Name = "chkRegexp";
-            this.chkRegexp.Size = new System.Drawing.Size(175, 17);
+            this.chkRegexp.Size = new System.Drawing.Size(87, 19);
             this.chkRegexp.TabIndex = 1;
-            this.chkRegexp.Text = "Search with Regular expression";
+            this.chkRegexp.Text = "Use RegExp";
             this.chkRegexp.UseVisualStyleBackColor = true;
             // 
             // lblFilename
             // 
             this.lblFilename.AutoSize = true;
             this.lblFilename.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFilename.Location = new System.Drawing.Point(6, 44);
+            this.lblFilename.Location = new System.Drawing.Point(7, 51);
             this.lblFilename.Name = "lblFilename";
             this.lblFilename.Size = new System.Drawing.Size(106, 13);
             this.lblFilename.TabIndex = 2;
@@ -84,17 +93,20 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lstResults.FormattingEnabled = true;
-            this.lstResults.Location = new System.Drawing.Point(12, 108);
+            this.lstResults.ItemHeight = 15;
+            this.lstResults.Location = new System.Drawing.Point(14, 124);
+            this.lstResults.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.lstResults.Name = "lstResults";
-            this.lstResults.Size = new System.Drawing.Size(471, 303);
+            this.lstResults.Size = new System.Drawing.Size(556, 304);
             this.lstResults.TabIndex = 3;
             this.lstResults.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.lstResults_KeyPress);
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(6, 63);
+            this.txtSearch.Location = new System.Drawing.Point(7, 72);
+            this.txtSearch.Margin = new System.Windows.Forms.Padding(3, 4, 5, 4);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(459, 20);
+            this.txtSearch.Size = new System.Drawing.Size(541, 23);
             this.txtSearch.TabIndex = 0;
             this.txtSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSearch_KeyPress);
             // 
@@ -108,9 +120,11 @@
             this.grpSearch.Controls.Add(this.btnSearch);
             this.grpSearch.Controls.Add(this.txtSearch);
             this.grpSearch.Controls.Add(this.chkRegexp);
-            this.grpSearch.Location = new System.Drawing.Point(12, 12);
+            this.grpSearch.Location = new System.Drawing.Point(14, 14);
+            this.grpSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.grpSearch.Name = "grpSearch";
-            this.grpSearch.Size = new System.Drawing.Size(471, 92);
+            this.grpSearch.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.grpSearch.Size = new System.Drawing.Size(556, 106);
             this.grpSearch.TabIndex = 0;
             this.grpSearch.TabStop = false;
             this.grpSearch.Text = "Search parameters";
@@ -120,9 +134,10 @@
             this.chkFoldersIncluded.AutoSize = true;
             this.chkFoldersIncluded.Checked = true;
             this.chkFoldersIncluded.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkFoldersIncluded.Location = new System.Drawing.Point(9, 17);
+            this.chkFoldersIncluded.Location = new System.Drawing.Point(10, 19);
+            this.chkFoldersIncluded.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.chkFoldersIncluded.Name = "chkFoldersIncluded";
-            this.chkFoldersIncluded.Size = new System.Drawing.Size(176, 17);
+            this.chkFoldersIncluded.Size = new System.Drawing.Size(196, 19);
             this.chkFoldersIncluded.TabIndex = 4;
             this.chkFoldersIncluded.Text = "Include matches by foldername ";
             this.chkFoldersIncluded.UseVisualStyleBackColor = true;
@@ -132,9 +147,10 @@
             this.chkIgnoreCase.AutoSize = true;
             this.chkIgnoreCase.Checked = true;
             this.chkIgnoreCase.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkIgnoreCase.Location = new System.Drawing.Point(206, 37);
+            this.chkIgnoreCase.Location = new System.Drawing.Point(240, 42);
+            this.chkIgnoreCase.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.chkIgnoreCase.Name = "chkIgnoreCase";
-            this.chkIgnoreCase.Size = new System.Drawing.Size(82, 17);
+            this.chkIgnoreCase.Size = new System.Drawing.Size(86, 19);
             this.chkIgnoreCase.TabIndex = 3;
             this.chkIgnoreCase.Text = "Ignore case";
             this.chkIgnoreCase.UseVisualStyleBackColor = true;
@@ -144,9 +160,10 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.toolStripSearchResCount});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 420);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 434);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(495, 22);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(584, 22);
             this.statusStrip1.TabIndex = 4;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -164,17 +181,19 @@
             // 
             // FrmSearch
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(495, 442);
+            this.ClientSize = new System.Drawing.Size(584, 456);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.lstResults);
             this.Controls.Add(this.grpSearch);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(425, 400);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.MinimumSize = new System.Drawing.Size(500, 450);
             this.Name = "FrmSearch";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Search";
+            this.Text = "Search";            
             this.Load += new System.EventHandler(this.frmSearch_Load);
             this.Resize += new System.EventHandler(this.frmSearch_Resize);
             this.grpSearch.ResumeLayout(false);

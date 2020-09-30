@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using FileSystemImage.DataModels;
 using GeneralToolkitLib.Storage.Models;
 using Serilog;
 
@@ -42,6 +43,7 @@ namespace FileSystemImage.FileSystem
             if (_fileSystemWorker != null)
             {
                 _fileSystemWorker.Stop();
+                _fileSystemWorker.Dispose();
                 _fileSystemWorker = null;
                 GC.Collect();
             }
@@ -62,7 +64,7 @@ namespace FileSystemImage.FileSystem
             CancelCreateFileSystemDriveData();
         }
 
-        private class FileSystemWorker
+        private class FileSystemWorker  : IDisposable
         {
             private const int PROGRESS_UPDATE_INTERVAL = 100; //10 times a second
             private const int MAX_THREADS = 4;
@@ -71,7 +73,7 @@ namespace FileSystemImage.FileSystem
             private readonly ProgressCallback _progressCallback;
             private readonly Thread _progressMonitorThread;
             private readonly Thread _workerThread;
-            private readonly ManualResetEvent _progressManualResetEvent;
+            private ManualResetEvent _progressManualResetEvent;
             private double _currentProgress;
             private double _maxProgress;
             private bool _runThMain;
@@ -290,6 +292,15 @@ namespace FileSystemImage.FileSystem
             public void Stop()
             {
                 _runThMain = false;
+            }
+
+            public void Dispose()
+            {
+                if (_progressManualResetEvent != null)
+                {
+                    _progressManualResetEvent.Dispose();
+                    _progressManualResetEvent = null;
+                }
             }
         }
     }

@@ -35,7 +35,7 @@
             this.grpSettings = new System.Windows.Forms.GroupBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
+            this.btnLoadFileSys = new System.Windows.Forms.Button();
             this.grpSettings.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,7 +63,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(18, 31);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(31, 13);
+            this.label1.Size = new System.Drawing.Size(32, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "Disk:";
             // 
@@ -99,24 +99,25 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // btnSave
+            // btnLoadFileSys
             // 
-            this.btnSave.Enabled = false;
-            this.btnSave.Location = new System.Drawing.Point(273, 151);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(149, 24);
-            this.btnSave.TabIndex = 8;
-            this.btnSave.Text = "Load data in main window";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnLoadFileSys.Enabled = false;
+            this.btnLoadFileSys.Location = new System.Drawing.Point(257, 151);
+            this.btnLoadFileSys.Name = "btnLoadFileSys";
+            this.btnLoadFileSys.Size = new System.Drawing.Size(165, 24);
+            this.btnLoadFileSys.TabIndex = 8;
+            this.btnLoadFileSys.Text = "Load data in main window";
+            this.btnLoadFileSys.UseVisualStyleBackColor = true;
+            this.btnLoadFileSys.Click += new System.EventHandler(this.btnLoadFileSys_Click);
             // 
-            // frmCreateSysImage
+            // FrmCreateSysImage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(434, 180);
-            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.btnLoadFileSys);
             this.Controls.Add(this.grpSettings);
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -140,7 +141,7 @@
         private System.Windows.Forms.GroupBox grpSettings;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnLoadFileSys;
 
     }
 }

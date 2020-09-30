@@ -8,16 +8,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using FileSystemImage.DataModels;
 using FileSystemImage.FileSystem;
 using FileSystemImage.InputForms;
 using FileSystemImage.Utils;
 using GeneralToolkitLib.Converters;
+using FileSystemImage.DataModels;
 using GeneralToolkitLib.DataTypes;
 using GeneralToolkitLib.Hashing;
-using GeneralToolkitLib.Storage;
-using GeneralToolkitLib.Storage.Models;
 using Serilog;
+using GeneralToolkitLib.Storage.Models;
+using GeneralToolkitLib.Storage;
 
 namespace FileSystemImage
 {
@@ -29,7 +29,15 @@ namespace FileSystemImage
 
         public FrmMain()
         {
-            InitializeComponent();
+            if (this.DesignMode)
+            {
+
+            }
+            else
+            {
+                InitializeComponent();
+            }
+            
             FolderTreeView.Nodes.Clear();
 
             // Serilog already configured and initialized at this stage in program.cs so
@@ -48,14 +56,17 @@ namespace FileSystemImage
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            Close();
+            //Application.Exit();
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = new FrmCreateSysImage();
-            form.SetMainWindow(this);
-            form.ShowDialog(this);
+            using (var form = new FrmCreateSysImage())
+            {
+                form.SetMainWindow(this);
+                form.ShowDialog(this);
+            }
         }
 
         public void LoadFileSystemDrive(FileSystemDrive fileSystemDrive)
@@ -96,19 +107,21 @@ namespace FileSystemImage
 
         private void openToolStripMenuItem_Click(object sender, EventArgs eventArgs)
         {
-            var openFileDialog = new OpenFileDialog();
-            var passwordDialog = new FormGetPassword();
-            openFileDialog.Filter = "FileSystemImage files (*.fsi)|*.fsi";
+            var passwordDialog = MemoryHandler.GetForm<FormGetPassword>();
 
-            if (openFileDialog.ShowDialog() == DialogResult.OK && passwordDialog.ShowDialog(this) == DialogResult.OK)
+            using (var openFileDialog = new OpenFileDialog())
             {
-                string password = passwordDialog.PasswordString;
-                _currentFileSystemDrive = null;
-                _currentFileName = openFileDialog.FileName;
+                openFileDialog.Filter = "FileSystemImage files (*.fsi)|*.fsi";
+                if (openFileDialog.ShowDialog() == DialogResult.OK && passwordDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    string password = passwordDialog.PasswordString;
+                    _currentFileSystemDrive = null;
+                    _currentFileName = openFileDialog.FileName;
 
-                LoadAndSaveProgressInfoLabel.Text = "Opening file: " + openFileDialog.FileName;
-                LoadFileSystemImageFromFile(_currentFileName, password);
-                Log.Debug("Successful opened file: {FileName}", openFileDialog.FileName);
+                    LoadAndSaveProgressInfoLabel.Text = "Opening file: " + openFileDialog.FileName;
+                    LoadFileSystemImageFromFile(_currentFileName, password);
+                    Log.Debug("Successful opened file: {FileName}", openFileDialog.FileName);
+                }
             }
         }
 
@@ -170,24 +183,28 @@ namespace FileSystemImage
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var setPasswordDialog = new FormSetPassword();
-
             if (_currentFileSystemDrive == null)
             {
                 MessageBox.Show("Nothing to save!");
                 return;
             }
 
+            var setPasswordDialog = MemoryHandler.GetForm<FormSetPassword>();
+
+
             if (_currentFileName == null)
             {
-                var saveFileDialog = new SaveFileDialog
+                bool fileSelected = false;
+                using (var saveFileDialog = new SaveFileDialog() { Filter = "FileSystemImage files (*.fsi)|*.fsi" })
                 {
-                    Filter = "FileSystemImage files (*.fsi)|*.fsi"
-                };
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    fileSelected = saveFileDialog.ShowDialog() == DialogResult.OK;
                     _currentFileName = saveFileDialog.FileName;
-                else
+                }
+
+                if (!fileSelected)
+                {
                     return;
+                }
             }
 
             if (_currentFileName != null && setPasswordDialog.ShowDialog(this) == DialogResult.OK)
@@ -195,12 +212,15 @@ namespace FileSystemImage
                 string password = setPasswordDialog.VerifiedPassword;
                 SaveFileSystemImageToFile(_currentFileSystemDrive, _currentFileName, password);
             }
+
+
             MemoryHandler.RunGarbageCollect();
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var setPasswordDialog = new FormSetPassword();
+            var setPasswordDialog = MemoryHandler.GetForm<FormSetPassword>();
+            string fileName;
 
             if (_currentFileSystemDrive == null)
             {
@@ -208,20 +228,24 @@ namespace FileSystemImage
                 return;
             }
 
-            var saveFileDialog = new SaveFileDialog
+            using (var saveFileDialog = new SaveFileDialog())
             {
-                Filter = "FileSystemImage files (*.fsi)|*.fsi"
+                saveFileDialog.Filter = "FileSystemImage files (*.fsi)|*.fsi";
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    fileName = saveFileDialog.FileName;
+                    _currentFileName = saveFileDialog.FileName;
+                }
+                else
+                    return;
             };
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                _currentFileName = saveFileDialog.FileName;
-            else
-                return;
+
 
             if (_currentFileName != null && setPasswordDialog.ShowDialog(this) == DialogResult.OK)
             {
                 string password = setPasswordDialog.VerifiedPassword;
                 SaveFileSystemImageToFile(_currentFileSystemDrive, _currentFileName, password);
-                Log.Debug("Successfully Saved file: {FileName}", saveFileDialog.FileName);
+                Log.Debug("Successfully Saved file: {FileName}", fileName);
             }
             MemoryHandler.RunGarbageCollect();
         }
@@ -255,17 +279,25 @@ namespace FileSystemImage
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var aboutBox = new FormAboutBox();
+            var aboutBox = MemoryHandler.GetForm<FormAboutBox>();
             aboutBox.ShowDialog(this);
         }
 
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (_currentFileSystemDrive == null)
+            {
+                MessageBox.Show("Nothing to clear.", "No data loaded! ", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            FileSystemDrive current = _currentFileSystemDrive;
             FolderTreeView.Nodes.Clear();
             FileListDataGridView.DataSource = null;
             _currentFileSystemDrive = null;
             _currentFileName = null;
             DirectoryInfoDataLabel.Text = "";
+            MemoryHandler.DealocateObjectStructure<FileSystemDrive>(ref current);
 
             MemoryHandler.RunGarbageCollect();
         }
@@ -333,6 +365,8 @@ namespace FileSystemImage
                 fileList = _currentFileSystemDrive.RootFileList.ConvertAll(FileSystemFileWrapper.ConvertObject);
 
             FileListDataGridView.DataSource = fileList;
+            FileListDataGridView.Refresh();
+            FileListDataGridView.AutoResizeColumns();
         }
 
         private List<FileSystemFileWrapper> GetFileSystemFileListFromNode(TreeNode selectedNode, bool setStatusBarInfo)
@@ -422,16 +456,16 @@ namespace FileSystemImage
 
             try
             {
-                DoPartialTreeUpdateAsync(fileSystemDirectory);
+                DoPartialUpdateOnlyFiles(fileSystemDirectory);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(this, ex.Message);
-                Log.Error(ex, "DoPartialTreeUpdateAsync failed");
+                Log.Error(ex, "DoPartialUpdateOnlyFiles failed");
             }
         }
 
-        private void DoPartialTreeUpdateAsync(FileSystemDirectory targetDirectory)
+        private void DoPartialUpdateOnlyFiles(FileSystemDirectory targetDirectory)
         {
             var storageManagerProgress = new Progress<StorageManagerProgress>();
             LoadAndSaveProgressBar.Visible = true;
@@ -550,7 +584,7 @@ namespace FileSystemImage
         {
             if (FileSystemDriveIsAvailable)
             {
-                var driveInfoForm = new frmDriveInfo();
+                var driveInfoForm = MemoryHandler.GetForm<frmDriveInfo>();
                 driveInfoForm.SetFileSystemDrive(_currentFileSystemDrive);
                 driveInfoForm.ShowDialog(this);
             }
@@ -563,7 +597,8 @@ namespace FileSystemImage
                 MessageBox.Show("Please load a file system image first");
                 return;
             }
-            var searchDialog = new FrmSearch(_logger);
+            var searchDialog = MemoryHandler.GetForm<FrmSearch>();
+
             searchDialog.SetFileSystemDrive(_currentFileSystemDrive);
             searchDialog.ShowDialog(this);
         }
@@ -594,9 +629,9 @@ namespace FileSystemImage
 
             foreach (DataGridViewRow selectedRow in FileListDataGridView.SelectedRows)
             {
-                if (selectedRow.DataBoundItem is FileSystemFileWrapper selectedFile && selectedFile.FilePath != null)
+                if (selectedRow.DataBoundItem is FileSystemFileWrapper selectedFile && selectedFile.FullPath != null)
                 {
-                    paths.Add(selectedFile.FilePath);
+                    paths.Add(selectedFile.FullPath);
                 }
             }
 
@@ -611,9 +646,9 @@ namespace FileSystemImage
 
             foreach (DataGridViewRow selectedRow in FileListDataGridView.SelectedRows)
             {
-                if (selectedRow.DataBoundItem is FileSystemFileWrapper selectedFile && selectedFile.FilePath != null)
+                if (selectedRow.DataBoundItem is FileSystemFileWrapper selectedFile && selectedFile.FullPath != null)
                 {
-                    sb.AppendLine(selectedFile.FilePath);
+                    sb.AppendLine(selectedFile.FullPath);
                 }
             }
 
@@ -637,7 +672,7 @@ namespace FileSystemImage
             }
 
             // Root folder?
-            string sfvFilename = fileSystemFileWrapper.FilePath ?? _currentFileSystemDrive.DriveLetter + fileSystemFileWrapper.Name;
+            string sfvFilename = fileSystemFileWrapper.FullPath ?? _currentFileSystemDrive.DriveLetter + fileSystemFileWrapper.Name;
             int fileExtensionDelimiter = sfvFilename.LastIndexOf('.');
             if (fileExtensionDelimiter > 0)
             {
@@ -669,9 +704,9 @@ namespace FileSystemImage
 
             foreach (DataGridViewRow selectedRow in FileListDataGridView.SelectedRows)
             {
-                if (selectedRow.DataBoundItem is FileSystemFileWrapper selectedFile && selectedFile.FilePath != null)
+                if (selectedRow.DataBoundItem is FileSystemFileWrapper selectedFile && selectedFile.FullPath != null)
                 {
-                    paths.Add(selectedFile.FilePath);
+                    paths.Add(selectedFile.FullPath);
                 }
             }
 
@@ -689,7 +724,7 @@ namespace FileSystemImage
             }
 
             // Root folder?
-            string sfvFilename = fileSystemFileWrapper.FilePath ?? _currentFileSystemDrive.DriveLetter + fileSystemFileWrapper.Name;
+            string sfvFilename = fileSystemFileWrapper.FullPath ?? _currentFileSystemDrive.DriveLetter + fileSystemFileWrapper.Name;
             int fileExtensionDelimiter = sfvFilename.LastIndexOf('.');
             if (fileExtensionDelimiter > 0)
             {
@@ -721,9 +756,9 @@ namespace FileSystemImage
 
             foreach (DataGridViewRow selectedRow in FileListDataGridView.SelectedRows)
             {
-                if (selectedRow.DataBoundItem is FileSystemFileWrapper selectedFile && selectedFile.FilePath != null)
+                if (selectedRow.DataBoundItem is FileSystemFileWrapper selectedFile && selectedFile.FullPath != null)
                 {
-                    paths.Add(selectedFile.FilePath);
+                    paths.Add(selectedFile.FullPath);
                 }
             }
 
@@ -771,7 +806,7 @@ namespace FileSystemImage
             var selectedItem = FolderTreeView.SelectedNode;
             if (selectedItem != null)
             {
-                FormFolderProperties folderProperties = new FormFolderProperties();
+                FormFolderProperties folderProperties = MemoryHandler.GetForm<FormFolderProperties>();
                 folderProperties.TreeNodeInit(selectedItem);
 
                 folderProperties.ShowDialog(this);
@@ -795,5 +830,16 @@ namespace FileSystemImage
         }
 
         #endregion
+
+        private async void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_currentFileSystemDrive != null)
+            {
+                MemoryHandler.DealocateObjectStructure<FileSystemDrive>(ref _currentFileSystemDrive);
+            }
+            await MemoryHandler.DisposeAnyActiveForm();
+            e.Cancel = false;
+
+        }
     }
 }

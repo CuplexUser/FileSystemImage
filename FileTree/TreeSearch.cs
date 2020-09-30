@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using FileSystemImage.FileSystem;
 using FileSystemImage.Utils;
+using FileSystemImage.DataModels;
 
 namespace FileSystemImage.FileTree
 {
@@ -63,9 +63,6 @@ namespace FileSystemImage.FileTree
                 {
                     throw new ArgumentException(@"Invalid regular expression syntax", nameof(searchString));
                 }
-
-
-
             }
             else
             {
@@ -89,12 +86,6 @@ namespace FileSystemImage.FileTree
         {
             var searchRes = new List<TreeSearchResult>();
 
-            if (includeFolderNames && depth >= _folderSequenceArray.Length)
-            {
-                //System.Data.Linq.
-                //if (_folderSequenceArray.)   
-            }
-
             if (rootDirectory.FileList != null)
             {
                 foreach (FileSystemFile fileSystemFile in rootDirectory.FileList)
@@ -108,11 +99,6 @@ namespace FileSystemImage.FileTree
             {
                 foreach (var fsd in rootDirectory.DirectoryList)
                 {
-                    if (includeFolderNames && depth >= _folderSequenceArray.Length)
-                    {
-                        //searchRes.Add(new TreeSearchResult());
-                    }
-
                     //if (includeFolderNames && _regularExpression.IsMatch(fsd.Name
 
                     var recursiveResult = await SearchAsync(searchString, includeFolderNames, fsd, currentPath + "\\" + fsd.Name, depth + 1);

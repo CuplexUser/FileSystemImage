@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FileSystemImage.FileSystem;
 using GeneralToolkitLib.Converters;
+using FileSystemImage.DataModels;
 using Serilog;
 
 namespace FileSystemImage
@@ -74,7 +75,7 @@ namespace FileSystemImage
                 FileUtils.CreateFileSystemDriveData(((ListItem)drpDrive.Items[drpDrive.SelectedIndex]).Value, ProgressUpdate, SetFileSystemDrive);
                 btnStart.Enabled = false;
                 btnCancel.Enabled = true;
-                btnSave.Enabled = false;
+                btnLoadFileSys.Enabled = false;
             }
         }
 
@@ -83,15 +84,6 @@ namespace FileSystemImage
             FileUtils.CancelCreateFileSystemDriveData();
             btnStart.Enabled = true;
             btnCancel.Enabled = false;
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            if(_mainWindow != null)
-            {
-                _mainWindow.LoadFileSystemDrive(_currentFileSystemDrive);
-                Close();
-            }
         }
 
         //Foreign thread
@@ -127,7 +119,7 @@ namespace FileSystemImage
         {
             if(_currentFileSystemDrive != null)
             {
-                btnSave.Enabled = true;
+                btnLoadFileSys.Enabled = true;
                 btnCancel.Enabled = false;
                 btnStart.Enabled = true;
             }
@@ -143,5 +135,15 @@ namespace FileSystemImage
         }
 
         private delegate void CreateFileSystemImageComplete();
+
+        private void btnLoadFileSys_Click(object sender, EventArgs e)
+        {
+            if (_mainWindow != null)
+            {
+                _mainWindow.LoadFileSystemDrive(_currentFileSystemDrive);
+                this.DialogResult = DialogResult.OK;
+                Close();
+            }
+        }
     }
 }

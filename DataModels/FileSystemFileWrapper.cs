@@ -1,32 +1,43 @@
 ﻿using System;
+using System.ComponentModel;
 using FileSystemImage.FileSystem;
 using GeneralToolkitLib.Converters;
 
 namespace FileSystemImage.DataModels
 {
+    [DataObject]
     public class FileSystemFileWrapper
     {
-        private readonly FileSystemFile _fileSystemFile;
-        public FileSystemFileWrapper(FileSystemFile fileSystemFile)
+        public FileSystemFileWrapper()
         {
-            _fileSystemFile = fileSystemFile;
+
         }
 
         public static FileSystemFileWrapper ConvertObject(FileSystemFile fileSystemFile)
         {
-            return new FileSystemFileWrapper(fileSystemFile);
+            var fsWrapper = new FileSystemFileWrapper()
+            {
+                Name = fileSystemFile.Name,
+                FullPath = fileSystemFile.FullName,
+                FileSize = GeneralConverters.FormatFileSizeToString(fileSystemFile.FileSize, 2),
+                ModifiedDate = fileSystemFile.ModifiedDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                CreateDate = fileSystemFile.CreateDate.ToString("yyyy-MM-dd hh:mm:ss"),
+                Attributes = GeneralConverters.FileAttributesToString(fileSystemFile.FileAttributes)
+            };
+
+            return fsWrapper;
         }
 
-        public string Name => _fileSystemFile.Name;
+        public string Name { get; set; }
 
-        public string FilePath => _fileSystemFile.FullName;
+        public string FullPath { get; set; }
 
-        public string FileSize => GeneralConverters.FormatFileSizeToString(_fileSystemFile.FileSize, 2);
+        public string FileSize { get; set; }
 
-        public string Attributes => GeneralConverters.FileAttributesToString(_fileSystemFile.FileAttributes);
+        public string Attributes { get; set; }
 
-        public string CreateDate => _fileSystemFile.CreateDate.ToString("yyyy-MM-dd");
+        public string CreateDate { get; set; }
 
-        public string ModifiedDate => _fileSystemFile.ModifiedDate.ToString("yyyy-MM-dd");
+        public string ModifiedDate { get; set; }
     }
 }
