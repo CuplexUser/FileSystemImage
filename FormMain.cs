@@ -8,27 +8,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using FileSystemImage.FileSystem;
+using Autofac;
+using AutoMapper;
 using FileSystemImage.InputForms;
 using FileSystemImage.Utils;
 using GeneralToolkitLib.Converters;
 using FileSystemImage.DataModels;
+using FileSystemImage.Library.Delegates;
 using GeneralToolkitLib.DataTypes;
 using GeneralToolkitLib.Hashing;
 using Serilog;
 using GeneralToolkitLib.Storage.Models;
 using GeneralToolkitLib.Storage;
+using FileSystemImage.Models;
+using FileSystemImage.Services;
 
 namespace FileSystemImage
 {
-    public partial class FrmMain : Form
+    public partial class FormMain : Form
     {
         private string _currentFileName;
-        private FileSystemDrive _currentFileSystemDrive;
+        private DriveModel _currentFileSystemDrive;
         private readonly ILogger _logger;
+        private readonly DiskScanService _diskScanService;
+        private readonly ILifetimeScope _lifetimeScope;
+        private readonly IMapper _mapper;
 
-        public FrmMain()
+        public FormMain(DiskScanService diskScanService, ILifetimeScope lifetimeScope, IMapper mapper)
         {
+            _lifetimeScope = lifetimeScope;
+            _mapper = mapper;
+            _diskScanService = diskScanService;
+
             if (this.DesignMode)
             {
 
@@ -37,7 +48,7 @@ namespace FileSystemImage
             {
                 InitializeComponent();
             }
-            
+
             FolderTreeView.Nodes.Clear();
 
             // Serilog already configured and initialized at this stage in program.cs so
@@ -62,16 +73,17 @@ namespace FileSystemImage
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var form = new FrmCreateSysImage())
+            using (var scope = _lifetimeScope.BeginLifetimeScope())
             {
+                var form = scope.Resolve<FrmCreateSysImage>();
                 form.SetMainWindow(this);
                 form.ShowDialog(this);
             }
         }
 
-        public void LoadFileSystemDrive(FileSystemDrive fileSystemDrive)
+        public void LoadFileSystemDrive(DriveModel driveModel)
         {
-            _currentFileSystemDrive = fileSystemDrive;
+            _currentFileSystemDrive = driveModel;
             FolderTreeView.Nodes.Clear();
 
             if (FileSystemDriveIsAvailable)
@@ -81,10 +93,10 @@ namespace FileSystemImage
                 root.ImageIndex = 1;
                 root.SelectedImageIndex = 1;
                 root.StateImageIndex = 1;
-                root.Name = fileSystemDrive.DriveLetter;
+                root.Name = driveModel.DriveLetter;
                 root.Tag = new RootIdentifier();
 
-                foreach (FileSystemDirectory dir in _currentFileSystemDrive.DirectoryList)
+                foreach (DirectoryModel dir in _currentFileSystemDrive.DirectoryList)
                 {
                     if (dir.DirectoryList == null)
                         root.Nodes.Add(dir.Name);
@@ -97,8 +109,11 @@ namespace FileSystemImage
                         root.Nodes.Add(new TreeNode(dir.Name, treeNodeChildArr));
                     }
                 }
-                if (fileSystemDrive.RootFileList != null)
-                    FileListDataGridView.DataSource = fileSystemDrive.RootFileList.ConvertAll(FileSystemFileWrapper.ConvertObject);
+
+                if (driveModel.RootFileList != null)
+                    FileListDataGridView.DataSource =driveModel.RootFileList;
+
+                //driveModel.RootFileList.ConvertAll(FileModel.ConvertObject);
 
                 root.Expand();
             }
@@ -125,6 +140,7 @@ namespace FileSystemImage
             }
         }
 
+        // TODO move implementation
         private void LoadFileSystemImageFromFile(string path, string password)
         {
             var storageManagerProgress = new Progress<StorageManagerProgress>();
@@ -250,7 +266,7 @@ namespace FileSystemImage
             MemoryHandler.RunGarbageCollect();
         }
 
-        private void SaveFileSystemImageToFile(FileSystemDrive fileSystemDrive, string path, string password)
+        private void SaveFileSystemImageToFile(DriveModel fileSystemDrive, string path, string password)
         {
             var storageManagerProgress = new Progress<StorageManagerProgress>();
             LoadAndSaveProgressBar.Visible = true;
@@ -291,13 +307,13 @@ namespace FileSystemImage
                 return;
             }
 
-            FileSystemDrive current = _currentFileSystemDrive;
+            DriveModel current = _currentFileSystemDrive;
             FolderTreeView.Nodes.Clear();
             FileListDataGridView.DataSource = null;
             _currentFileSystemDrive = null;
             _currentFileName = null;
             DirectoryInfoDataLabel.Text = "";
-            MemoryHandler.DealocateObjectStructure<FileSystemDrive>(ref current);
+            MemoryHandler.DealocateObjectStructure<DriveModel>(ref current);
 
             MemoryHandler.RunGarbageCollect();
         }
@@ -326,7 +342,7 @@ namespace FileSystemImage
                 string currentItem = nodeTraversalStack.Pop();
                 for (int i = 0; i < directoryList.Count; i++)
                 {
-                    FileSystemDirectory dir = directoryList[i];
+                    DirectoryModel dir = directoryList[i];
                     if (dir.Name == currentItem)
                     {
                         directoryList = dir.DirectoryList;
@@ -343,10 +359,10 @@ namespace FileSystemImage
             {
                 if (firstNode.Nodes.Count == 0)
                 {
-                    FileSystemDirectory subDir = directoryList.SingleOrDefault(d => d.Name == firstNode.Text);
+                    DirectoryModel subDir = directoryList.SingleOrDefault(d => d.Name == firstNode.Text);
                     if (subDir?.DirectoryList != null)
                     {
-                        foreach (FileSystemDirectory fsd in subDir.DirectoryList)
+                        foreach (DirectoryModel fsd in subDir.DirectoryList)
                             firstNode.Nodes.Add(new TreeNode(fsd.Name));
                     }
                 }
@@ -362,17 +378,17 @@ namespace FileSystemImage
             var fileList = GetFileSystemFileListFromNode(selectedNode, true);
 
             if (fileList == null && _currentFileSystemDrive.RootFileList != null && (_currentFileSystemDrive != null && selectedNode.Parent == null))
-                fileList = _currentFileSystemDrive.RootFileList.ConvertAll(FileSystemFileWrapper.ConvertObject);
+                fileList = _currentFileSystemDrive.RootFileList;
 
             FileListDataGridView.DataSource = fileList;
             FileListDataGridView.Refresh();
             FileListDataGridView.AutoResizeColumns();
         }
 
-        private List<FileSystemFileWrapper> GetFileSystemFileListFromNode(TreeNode selectedNode, bool setStatusBarInfo)
+        private List<FileModel> GetFileSystemFileListFromNode(TreeNode selectedNode, bool setStatusBarInfo)
         {
             var directoryList = _currentFileSystemDrive.DirectoryList;
-            List<FileSystemFileWrapper> fileSystemList = null;
+            List<FileModel> fileSystemList = null;
             var nodeTraversalStack = new Stack<string>();
             TreeNode rootNode = selectedNode;
 
@@ -383,8 +399,8 @@ namespace FileSystemImage
             {
                 DirectoryInfoDataLabel.Text = GetRootDirectoryData(_currentFileSystemDrive);
                 if (_currentFileSystemDrive.RootFileList == null)
-                    _currentFileSystemDrive.RootFileList = new List<FileSystemFile>();
-                return _currentFileSystemDrive.RootFileList.ConvertAll(FileSystemFileWrapper.ConvertObject);
+                    _currentFileSystemDrive.RootFileList = new List<FileModel>();
+                return _currentFileSystemDrive.RootFileList;
             }
 
             while (rootNode.Parent != null)
@@ -400,11 +416,11 @@ namespace FileSystemImage
                 string currentItem = nodeTraversalStack.Pop();
                 for (int i = 0; i < directoryList.Count; i++)
                 {
-                    FileSystemDirectory dir = directoryList[i];
+                    DirectoryModel dir = directoryList[i];
                     if (dir.Name == currentItem)
                     {
                         if (nodeTraversalStack.Count == 0 && dir.FileList != null)
-                            fileSystemList = dir.FileList.ConvertAll(FileSystemFileWrapper.ConvertObject);
+                            fileSystemList = dir.FileList.ConvertAll(FileModel.ConvertObject);
 
                         directoryList = dir.DirectoryList;
 
@@ -424,13 +440,13 @@ namespace FileSystemImage
             return $"Sub Directories: {dir.SubDirectoriesTotal} | Files: {dir.FilesTotal} | Total file size: {GeneralConverters.FormatFileSizeToString(dir.FileSizeTotal, 2)}";
         }
 
-        private string GetRootDirectoryData(FileSystemDrive fileSystemDrive)
+        private string GetRootDirectoryData(DriveModel fileSystemDrive)
         {
             long directories = 0;
             long files = fileSystemDrive.RootFileList?.Count ?? 0;
-            long fileSizeTotal = fileSystemDrive.RootFileList?.Sum(f => f.FileSize) ?? 0;
+            long fileSizeTotal = fileSystemDrive.RootFileList.Sum(f => f.FileSize);
 
-            foreach (FileSystemDirectory fileSystemDirectory in fileSystemDrive.DirectoryList)
+            foreach (DirectoryModel fileSystemDirectory in fileSystemDrive.DirectoryList)
             {
                 directories += fileSystemDirectory.SubDirectoriesTotal + 1;
                 files += fileSystemDirectory.FilesTotal;
@@ -465,7 +481,7 @@ namespace FileSystemImage
             }
         }
 
-        private void DoPartialUpdateOnlyFiles(FileSystemDirectory targetDirectory)
+        private void DoPartialUpdateOnlyFiles(DirectoryModel targetDirectory)
         {
             var storageManagerProgress = new Progress<StorageManagerProgress>();
             LoadAndSaveProgressBar.Visible = true;
@@ -477,16 +493,24 @@ namespace FileSystemImage
                 LoadAndSaveProgressInfoLabel.Text = e.Text;
             };
 
+
+
             Task.Run(async () =>
             {
-                _currentFileSystemDrive = await FileUtils.UpdateFolderAsync(_currentFileSystemDrive, targetDirectory, storageManagerProgress);
+                _currentFileSystemDrive = await _diskScanService.UpdateFolderAsync(_currentFileSystemDrive, targetDirectory, new ProgressCallback(Target));
                 Invoke(new EventHandler(HandleOpenFileComplete));
             });
         }
 
-        private FileSystemDirectory GetFileSystemDirectoryFromPath(string path)
+        private void Target(double percentCompleted)
         {
-            FileSystemDirectory fsDirectory = null;
+            LoadAndSaveProgressBar.Value = Convert.ToInt32(percentCompleted * 100d);
+            LoadAndSaveProgressInfoLabel.Text = Convert.ToInt32(percentCompleted * 100d) + " %";
+        }
+
+        private DirectoryModel GetFileSystemDirectoryFromPath(string path)
+        {
+            DirectoryModel fsDirectory = null;
             var directoryList = _currentFileSystemDrive.DirectoryList;
             var pathSegmentArray = path.Split('\\');
 
@@ -629,7 +653,7 @@ namespace FileSystemImage
 
             foreach (DataGridViewRow selectedRow in FileListDataGridView.SelectedRows)
             {
-                if (selectedRow.DataBoundItem is FileSystemFileWrapper selectedFile && selectedFile.FullPath != null)
+                if (selectedRow.DataBoundItem is FileModel selectedFile && selectedFile.FullPath != null)
                 {
                     paths.Add(selectedFile.FullPath);
                 }
@@ -646,7 +670,7 @@ namespace FileSystemImage
 
             foreach (DataGridViewRow selectedRow in FileListDataGridView.SelectedRows)
             {
-                if (selectedRow.DataBoundItem is FileSystemFileWrapper selectedFile && selectedFile.FullPath != null)
+                if (selectedRow.DataBoundItem is FileModel selectedFile && selectedFile.FullPath != null)
                 {
                     sb.AppendLine(selectedFile.FullPath);
                 }
@@ -665,7 +689,7 @@ namespace FileSystemImage
         {
             if (FileListDataGridView.SelectedRows.Count == 0) return;
 
-            if (!(FileListDataGridView.SelectedRows[0].DataBoundItem is FileSystemFileWrapper fileSystemFileWrapper))
+            if (!(FileListDataGridView.SelectedRows[0].DataBoundItem is FileModel fileSystemFileWrapper))
             {
                 MessageBox.Show("Unexprected error in createSFVFile. DataBoundItem is " + FileListDataGridView.SelectedRows[0].DataBoundItem.GetType());
                 return;
@@ -704,7 +728,7 @@ namespace FileSystemImage
 
             foreach (DataGridViewRow selectedRow in FileListDataGridView.SelectedRows)
             {
-                if (selectedRow.DataBoundItem is FileSystemFileWrapper selectedFile && selectedFile.FullPath != null)
+                if (selectedRow.DataBoundItem is FileModel selectedFile && selectedFile.FullPath != null)
                 {
                     paths.Add(selectedFile.FullPath);
                 }
@@ -717,7 +741,7 @@ namespace FileSystemImage
         {
             if (FileListDataGridView.SelectedRows.Count == 0) return;
 
-            if (!(FileListDataGridView.SelectedRows[0].DataBoundItem is FileSystemFileWrapper fileSystemFileWrapper))
+            if (!(FileListDataGridView.SelectedRows[0].DataBoundItem is FileModel fileSystemFileWrapper))
             {
                 MessageBox.Show("Unexprected error in createMD5File. DataBoundItem is " + FileListDataGridView.SelectedRows[0].DataBoundItem.GetType());
                 return;
@@ -756,7 +780,7 @@ namespace FileSystemImage
 
             foreach (DataGridViewRow selectedRow in FileListDataGridView.SelectedRows)
             {
-                if (selectedRow.DataBoundItem is FileSystemFileWrapper selectedFile && selectedFile.FullPath != null)
+                if (selectedRow.DataBoundItem is FileModel selectedFile && selectedFile.FullPath != null)
                 {
                     paths.Add(selectedFile.FullPath);
                 }
@@ -835,7 +859,7 @@ namespace FileSystemImage
         {
             if (_currentFileSystemDrive != null)
             {
-                MemoryHandler.DealocateObjectStructure<FileSystemDrive>(ref _currentFileSystemDrive);
+                MemoryHandler.DealocateObjectStructure<DriveModel>(ref _currentFileSystemDrive);
             }
             await MemoryHandler.DisposeAnyActiveForm();
             e.Cancel = false;

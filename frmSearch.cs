@@ -5,15 +5,16 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using FileSystemImage.FileTree;
 using FileSystemImage.DataModels;
+using FileSystemImage.Models;
 using Serilog;
+using FileSystemImage.Models.FileTree;
 
 namespace FileSystemImage
 {
     public partial class FrmSearch : Form
     {
-        private FileSystemDrive _fileSystemDrive;
+        private DriveModel _fileSystemDrive;
         private CancellationTokenSource _searchCancellation = null;
 
         private delegate void SearchCompleteEventHandler(object sender, SearchEventArgs e);
@@ -24,7 +25,7 @@ namespace FileSystemImage
             InitializeComponent();            
         }
 
-        public void SetFileSystemDrive(FileSystemDrive fsd)
+        public void SetFileSystemDrive(DriveModel fsd)
         {
             _fileSystemDrive = fsd;
         }

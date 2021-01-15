@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using FileSystemImage.Utils;
 using FileSystemImage.DataModels;
 
-namespace FileSystemImage.FileTree
+namespace FileSystemImage.Models.FileTree
 {
     public class TreeSearch
     {

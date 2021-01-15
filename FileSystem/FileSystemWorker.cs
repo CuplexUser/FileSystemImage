@@ -5,103 +5,58 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FileSystemImage.DataModels;
-using GeneralToolkitLib.Storage.Models;
+using FileSystemImage.Library.Delegates;
 using Serilog;
 
 namespace FileSystemImage.FileSystem
 {
-    public delegate void ProgressCallback(double percentComplete);
-    public delegate void FileDataReturnCallback(FileSystemDrive fileSystemDrive);
-
-    public static class FileUtils
-    {
-        private static FileSystemWorker _fileSystemWorker;
-
-        public static bool IsRunning
-        {
-            get
-            {
-                if (_fileSystemWorker == null)
-                    return false;
-                return _fileSystemWorker.TaskIsRunning;
-            }
-        }
-
-        public static bool CreateFileSystemDriveData(string driveName, ProgressCallback progressCallback, FileDataReturnCallback fileDataReturnCallback)
-        {
-            if (_fileSystemWorker == null)
-            {
-                _fileSystemWorker = new FileSystemWorker(driveName, progressCallback, fileDataReturnCallback);
-                _fileSystemWorker.Start();
-                return true;
-            }
-            return false;
-        }
-
-        public static void CancelCreateFileSystemDriveData()
-        {
-            if (_fileSystemWorker != null)
-            {
-                _fileSystemWorker.Stop();
-                _fileSystemWorker.Dispose();
-                _fileSystemWorker = null;
-                GC.Collect();
-            }
-        }
-
-        public static async Task<FileSystemDrive> UpdateFolderAsync(FileSystemDrive fileSystemDrive, FileSystemDirectory targetDirectory, IProgress<StorageManagerProgress> progress)
-        {
-            return await Task.Run(() => UpdateFolder(fileSystemDrive, targetDirectory));
-        }
-
-        private static FileSystemDrive UpdateFolder(FileSystemDrive fileSystemDrive, FileSystemDirectory targetDirectory)
-        {
-            return fileSystemDrive;
-        }
-
-        public static void DeAllocateWorkerThread()
-        {
-            CancelCreateFileSystemDriveData();
-        }
-
-        private class FileSystemWorker  : IDisposable
+        public class FileSystemWorker : IDisposable
         {
             private const int PROGRESS_UPDATE_INTERVAL = 100; //10 times a second
-            private const int MAX_THREADS = 4;
+            private const int MAX_THREADS = 8;
             private readonly string _driveName;
             private readonly FileDataReturnCallback _fileDataReturnCallback;
-            private readonly ProgressCallback _progressCallback;
-            private readonly Thread _progressMonitorThread;
-            private readonly Thread _workerThread;
-            private ManualResetEvent _progressManualResetEvent;
+            private readonly ProgressCallback _progressCallback;            
             private double _currentProgress;
             private double _maxProgress;
             private bool _runThMain;
+
             public bool TaskIsRunning { get; private set; }
 
             public FileSystemWorker(string driveName, ProgressCallback progressCallback, FileDataReturnCallback fileDataReturnCallback)
             {
                 _driveName = driveName;
                 _progressCallback = progressCallback;
-                _fileDataReturnCallback = fileDataReturnCallback;
-                _workerThread = new Thread(ThMain);
-                _progressMonitorThread = new Thread(ThProgressMonitor);
-                _progressManualResetEvent = new ManualResetEvent(true);
+                _fileDataReturnCallback = fileDataReturnCallback;                
+
             }
 
-            private void ThProgressMonitor()
+            private Task ThProgressMonitor(CancellationToken token)
             {
-                while (_runThMain)
+                return Task.Factory.StartNew(() =>
                 {
-                    if (_progressCallback != null && _maxProgress > 0)
-                        _progressCallback.Invoke(_currentProgress/_maxProgress);
+                    while (_runThMain)
+                    {
+                        if (_progressCallback != null && _maxProgress > 0)
+                            _progressCallback.Invoke(_currentProgress / _maxProgress);
 
-                    _progressManualResetEvent.WaitOne(PROGRESS_UPDATE_INTERVAL);
-                }
+
+
+                        //_taskSynchronizer.AutoResetEvent.WaitOne(100);
+
+                    }
+
+                    if (_progressCallback != null)
+                        _progressCallback.Invoke(1);
+
+                }, token);
             }
+
+            public FileSystemDrive FileSystemDrive { get; private set; }
 
             private void ThMain()
             {
+                FileSystemDrive = null;
                 FileSystemDrive fileSystemDrive = new FileSystemDrive();
                 var driveInfoArr = DriveInfo.GetDrives();
                 DriveInfo driveInfo = null;
@@ -152,7 +107,8 @@ namespace FileSystemImage.FileSystem
                         });
 
                     //Set progress data
-                    _maxProgress = GetDirectoryCount(rootDir, 0, 2);
+                    _maxProgress = GetDirectoryCount(rootDir, 0, 4);
+                    //_taskSynchronizer.AutoResetEvent.Set();
 
                     var rootDirectories = rootDir.GetDirectories();
                     var rootDirectoriesQueue = new Queue<DirectoryInfo>(rootDirectories);
@@ -169,7 +125,7 @@ namespace FileSystemImage.FileSystem
                                 break;
 
                             DirectoryInfo dir = rootDirectoriesQueue.Dequeue();
-                            Task t = Task.Run(() => fileSystemDrive.DirectoryList.Add(GetFileSystemDirectory(dir, 0, 2)));
+                            Task t = Task.Factory.StartNew(() => fileSystemDrive.DirectoryList.Add(GetFileSystemDirectory(dir, 0, 2)));
                             awaitTasksList.Add(t);
                         }
 
@@ -179,12 +135,15 @@ namespace FileSystemImage.FileSystem
                             awaitTask.Wait();
                             awaitTasksList.Remove(awaitTask);
                         }
+
+                        //_taskSynchronizer.AutoResetEvent.Set();
                     }
 
                     Task.WaitAll(awaitTasksList.ToArray());
                 }
 
-                _progressManualResetEvent.Set();
+                FileSystemDrive = fileSystemDrive;
+                //_taskSynchronizer.AutoResetEvent.Set();
                 _fileDataReturnCallback?.Invoke(fileSystemDrive);
 
                 TaskIsRunning = false;
@@ -276,32 +235,45 @@ namespace FileSystemImage.FileSystem
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "Error in FileSystemWorker.GetDirectoryCount() : {Message}", ex.Message );
+                    Log.Error(ex, "Error in FileSystemWorker.GetDirectoryCount() : {Message}", ex.Message);
                 }
 
                 return count;
             }
 
-            public void Start()
+            public async Task<bool> Start()
             {
+                if (_runThMain)
+                    return false;
+
                 _runThMain = true;
-                _workerThread.Start();
-                _progressMonitorThread.Start();
+
+                
+                var token = new CancellationToken(false);
+                Task mainTask = Task.Factory.StartNew(ThMain, token); 
+                await mainTask;
+
+                //_taskSynchronizer.UpdateTask = ThProgressMonitor(//_taskSynchronizer.CancelToken);
+                ////_taskSynchronizer.UpdateTask.Start();
+                //_taskSynchronizer.AutoResetEvent.Set();
+
+              //  await //_taskSynchronizer.MainTask;
+
+                return true;
             }
 
-            public void Stop()
+            public bool Stop()
             {
-                _runThMain = false;
+                return false;
+              
             }
 
             public void Dispose()
             {
-                if (_progressManualResetEvent != null)
-                {
-                    _progressManualResetEvent.Dispose();
-                    _progressManualResetEvent = null;
-                }
+                
+
+                //_taskSynchronizer.Dispose();
             }
         }
-    }
+   
 }

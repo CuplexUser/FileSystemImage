@@ -1,6 +1,8 @@
-﻿namespace FileSystemImage
+﻿using FileSystemImage.Models;
+
+namespace FileSystemImage
 {
-    partial class FrmMain
+    partial class FormMain
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +31,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Node1");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Node4");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Node6");
@@ -484,7 +486,7 @@
             // 
             // fileSystemFileWrapperBindingSource
             // 
-            this.fileSystemFileWrapperBindingSource.DataSource = typeof(FileSystemImage.DataModels.FileSystemFileWrapper);
+            this.fileSystemFileWrapperBindingSource.DataSource = typeof(FileModel);
             // 
             // statusStrip1
             // 

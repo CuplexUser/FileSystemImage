@@ -2,25 +2,29 @@
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using FileSystemImage.FileSystem;
-using GeneralToolkitLib.Converters;
 using FileSystemImage.DataModels;
+using FileSystemImage.Library.Delegates;
+using FileSystemImage.Models;
+using FileSystemImage.Services;
 using Serilog;
+using GeneralToolkitLib.Converters;
 
 namespace FileSystemImage
 {
     public partial class FrmCreateSysImage : Form
     {
         private readonly object _fileSystemDriveLock = new object();
-        private FileSystemDrive _currentFileSystemDrive;
-        private FrmMain _mainWindow;
+        private DriveModel _currentFileSystemDrive;
+        private FormMain _mainWindow;
+        private readonly DiskScanService _diskScanService;
 
-        public FrmCreateSysImage()
+        public FrmCreateSysImage(DiskScanService diskScanService)
         {
+            _diskScanService = diskScanService;
             InitializeComponent();
         }
 
-        public void SetMainWindow(FrmMain frm)
+        public void SetMainWindow(FormMain frm)
         {
             _mainWindow = frm;
         }
@@ -68,22 +72,23 @@ namespace FileSystemImage
             return driveInfoText;
         }
 
-        private void btnStart_Click(object sender, EventArgs e)
+        private async void btnStart_Click(object sender, EventArgs e)
         {
             if(drpDrive.SelectedIndex >= 0)
             {
-                FileUtils.CreateFileSystemDriveData(((ListItem)drpDrive.Items[drpDrive.SelectedIndex]).Value, ProgressUpdate, SetFileSystemDrive);
                 btnStart.Enabled = false;
                 btnCancel.Enabled = true;
                 btnLoadFileSys.Enabled = false;
+                
+                await _diskScanService.CreateFileSystemDriveData(((ListItem)drpDrive.Items[drpDrive.SelectedIndex]).Value, ProgressUpdate, SetFileSystemDrive).ConfigureAwait(true);    
             }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private async void btnCancel_Click(object sender, EventArgs e)
         {
-            FileUtils.CancelCreateFileSystemDriveData();
             btnStart.Enabled = true;
             btnCancel.Enabled = false;
+            await _diskScanService.CancelCreateFileSystemDriveData();            
         }
 
         //Foreign thread
@@ -103,15 +108,16 @@ namespace FileSystemImage
         }
 
         //Foreign thread
-        public void SetFileSystemDrive(FileSystemDrive fileSystemDrive)
+        public void SetFileSystemDrive(DriveModel driveModel)
         {
             lock (_fileSystemDriveLock)
             {
-                _currentFileSystemDrive = fileSystemDrive;
+                _currentFileSystemDrive = driveModel;
             }
             if(Visible)
                 Invoke(new CreateFileSystemImageComplete(SetFileSystemDriveComplete));
-            FileUtils.DeAllocateWorkerThread();
+
+            _diskScanService.DeAllocateWorkerThread();
         }
 
         //NativeThead
@@ -127,7 +133,7 @@ namespace FileSystemImage
 
         private void frmCreateSysImage_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(FileUtils.IsRunning)
+            if(_diskScanService.IsRunning)
             {
                 e.Cancel = true;
                 MessageBox.Show("Please cancel the drive scan operation before closing this window");

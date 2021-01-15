@@ -2,12 +2,13 @@
 using System.Windows.Forms;
 using GeneralToolkitLib.Converters;
 using FileSystemImage.DataModels;
+using FileSystemImage.Models;
 
 namespace FileSystemImage
 {
     public partial class frmDriveInfo : Form
     {
-        private FileSystemDrive currentFileSystemDrive;
+        private DriveModel currentFileSystemDrive;
 
         public frmDriveInfo()
         {
@@ -62,7 +63,7 @@ namespace FileSystemImage
             Close();
         }
 
-        public void SetFileSystemDrive(FileSystemDrive fileSystemDrive)
+        public void SetFileSystemDrive(DriveModel fileSystemDrive)
         {
             this.currentFileSystemDrive = fileSystemDrive;
         }

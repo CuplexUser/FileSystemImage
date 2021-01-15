@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace FileSystemImage.FileTree
+namespace FileSystemImage.Models.FileTree
 {
     public class FileSystemTree
     {

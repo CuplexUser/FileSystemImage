@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace FileSystemImage.FileTree
+namespace FileSystemImage.Models.FileTree
 {
     public class TreeNode
     {

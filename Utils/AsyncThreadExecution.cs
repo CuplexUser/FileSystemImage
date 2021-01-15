@@ -1,5 +1,5 @@
 ﻿using System.Threading;
-using FileSystemImage.Utils.Delegates;
+using FileSystemImage.Library.Delegates;
 
 namespace FileSystemImage.Utils
 {
