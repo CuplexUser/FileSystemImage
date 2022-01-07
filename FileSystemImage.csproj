@@ -105,11 +105,10 @@
     <AssemblyOriginatorKeyFile>FileSystemImage.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>4D711FE25EEF45DC10FE6032C1324044BEF47950</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>FB058B341D9DED6BBA937CA68F50EC0D25B5C847</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>
-    </ManifestKeyFile>
+    <ManifestKeyFile>FileSystemImage_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -265,6 +264,7 @@
     </Compile>
     <None Include="FileSystemImage.pfx" />
     <None Include="FileSystemImage.ruleset" />
+    <None Include="FileSystemImage_TemporaryKey.pfx" />
     <None Include="Local.pfx" />
     <None Include="Properties\app.manifest">
       <SubType>Designer</SubType>

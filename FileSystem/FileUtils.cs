@@ -96,7 +96,8 @@ namespace FileSystemImage.FileSystem
                     if (_progressCallback != null && _maxProgress > 0)
                         _progressCallback.Invoke(_currentProgress/_maxProgress);
 
-                    _progressManualResetEvent.WaitOne(PROGRESS_UPDATE_INTERVAL);
+                    if (_progressManualResetEvent != null)
+                        _progressManualResetEvent.WaitOne(PROGRESS_UPDATE_INTERVAL);
                 }
             }
 
