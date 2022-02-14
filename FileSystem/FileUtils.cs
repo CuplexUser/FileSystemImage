@@ -185,7 +185,7 @@ namespace FileSystemImage.FileSystem
                     Task.WaitAll(awaitTasksList.ToArray());
                 }
 
-                _progressManualResetEvent.Set();
+                _progressManualResetEvent?.Set();
                 _fileDataReturnCallback?.Invoke(fileSystemDrive);
 
                 TaskIsRunning = false;
